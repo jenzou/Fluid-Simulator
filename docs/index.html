@@ -26,38 +26,41 @@
 <body>
 	<h1 align="middle">CS 184 - Final Project Proposal</h1>
 
-	<h2 align="middle">Project Title</h2>
+	<h2 align="middle">Position-Based Fluid Simulator</h2>
 	<h3 align="middle">Ashley Nguyen: 3031877941, Jennifer Zou: 3031880970, Z Wang: 25326943</h3>
 
-	<h3 align="middle">Summary</h2>
+	<h3 align="middle">We will build a position-based fluid simulator to render liquids for real-time applications. This approach models fluids as spherical particles which are subjected to forces like gravity and surface tension. Our application will
+		allow the user to interact with the particles by changing the size and viscosity and by applying external forces with the mouse.
+		</h2>
 
 		<h2>Problem Description</h2>
-		Context for idea
-		Describe the problem that you are trying to solve
-		Why it is important
-		Where it is challenging
-		General idea on how you are going to solve it
+		Simulating fluids has real-life applications in everyday situations and is highly relevant in practical computer graphics rendering situations. Examples of use cases include models of ocean currents and gases across academic research and gaming
+		purposes. Technically, SPH solvers guarantee incompressibility and convergence, and their inherent instability makes real-time fluid rendering very difficult and compute-intensive. We will use particle methods, which are simple and flexible, to
+		simulate fluids. In particular, we use PBD as it provides unconditionally stable time integration and robustness benefits by trading incompressibility for performance. We use NVIDIA’s Position Based Fluids paper
+		(http://mmacklin.com/pbf_sig_preprint.pdf) as our technical reference.
+
 
 		<h2>Goals and Deliverables</h2>
 		<h3>Baseline Plan</h2>
-			Describe what you believe you must accomplish to have a successful project and achieve the grade you expect
-			Planning for unexpected problems
+			We plan to render visualizations of fluids in image and video formats to gain a deeper understanding of fluid dynamics and particle interaction vis a vis graphics. We will accomplish this by implementing an iterative density solver (following
+			an NVIDIA paper) within a Positional Based Dynamics Framework which approximates the incompressibility and convergence guarantees of SPH solvers.
+
+			We believe this project is challenging but feasible in the time given. Rendering fluids requires us to learn basic fluid dynamics and modeling equations, but the generality of this task means we have many resources available for help.
+
+			To measure quality, we'll compare our render time and computational resources to benchmarks provided in relevant research papers. The primary goal here is to render fluid simulations in a reasonable time period (less than 5 minutes for 2014
+			Macbook Pro).
+
+			With this project, we hope to shed some light on how one's understanding of particle physics and the graphics pipeline changes as a result of extending a solid-rendering implementation to fluids. We'll seek out the differences between PBD and
+			SPH-based engines, and explore the space of solutions between these two approaches. We will learn how to use WebGL API to render the simulations.
+
+			We will create an informative and engaging website, showing the journey and approach that we took and sharing the resources and follow-up questions we found.
 
 			<h3>Aspirational Plan</h2>
-				Describe what you hope to achieve if things go well and you get ahead of schedule
+				If we complete the baseline plan, we aim to create an online simulator application that will allow users to manipulate the fluid simulation with particle size and viscosity controls in real time. The user will also be able to apply additional
+				external forces with the mouse. We can add more parameters to the application beyond size and viscosity of fluid. We can also simulate caustic lighting effects in water.
 
-				What you are trying to accomplish
-				What results you are going for
-				Why you think you can accomplish those goals
-				Define the kind of images you will create
-				(e.g. including a photo of a new lighting effect you will simulate).
-				If you are working on an interactive system
-				Describe what demo you will create
-				Define how you will measure the quality / performance of your system
-				(e.g. graphs showing speedup, or quantifying accuracy)
-				May not be possible to define precise target metrics at this time
-				Encourage you to try
-				What questions do you plan to answer with your analysis?
+				Rendering instantly or in milliseconds is an aspirational goal for our project. If we create a interactive web app, adapting the scene to user commands with low latency is vital to seamless user experience. We will need to explore techniques
+				for optimizing the fluid simulations.
 
 				<h2>Schedule</h2>
 				<p align="center">
@@ -66,9 +69,24 @@
 				</p>
 
 				<h2>Resources</h2>
-				List resources, e.g. books, papers and/or online resources that are references for your project.
-				List the computing platform, hardware and software resources that you will use for your project.
-				If you are starting from an existing piece of code or system, describe and provide a pointer to it here.
+				Paper:
+				<li>http://mmacklin.com/pbf_sig_preprint.pdf</li>
+
+				<br>
+
+				Video Inspiration:
+				<li>https://www.youtube.com/watch?v=ureGelZPi3o</li>
+				<li>https://www.youtube.com/watch?v=-S8wq0dz1H4</li>
+				<li>https://www.youtube.com/watch?v=zmw-BTCbWMw</li>
+				<li>Caustic Lighting: https://www.youtube.com/watch?v=l_0k_jGwW8Y</li>
+
+				<br>
+
+				Software:
+				<li>WebGL</li>
+				<li>OCF GPU cluster</li>
+				<li>Three.js</li>
+				<li>HTML</li>
 
 </body>
 
