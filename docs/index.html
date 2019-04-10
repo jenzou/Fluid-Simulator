@@ -24,6 +24,16 @@
 		td {
 			padding: 8px;
 		}
+
+		#caustics {
+			position: fixed;
+  		right: 0;
+  		bottom: 0;
+  		min-width: 100%;
+  		min-height: 100%;
+			z-index: -100;
+			opacity: 0.4;
+		}
 	</style>
 	<title>CS 184 | Final Project Proposal</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -33,7 +43,10 @@
 </head>
 
 <body>
-	<div>
+	<div class="header">
+		<video autoplay muted loop id="caustics">
+  		<source src="video/caustics.mp4" type="video/mp4">
+		</video>
 		<h1 align="middle">CS 184 - Final Project Proposal</h1>
 
 		<h2 align="middle">Position-Based Fluid Simulator</h2>
