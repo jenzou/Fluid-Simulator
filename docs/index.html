@@ -6,14 +6,23 @@
 		body {
 			font-family: 'Heebo', sans-serif;
 			padding-top: 50px;
-			padding-right: 50px;
-			padding-bottom: 0.25in;
-			padding-left: 50px;
+			padding-right: 200px;
+			padding-bottom: 50px;
+			padding-left: 200px;
 		}
 
-		iframe {
+		div {
+			padding: 10px;
+		}
+
+		figcaption {
 			text-align: center;
-			margin: auto;
+			font-style: italic;
+			font-size: 14px;
+		}
+
+		td {
+			padding: 8px;
 		}
 	</style>
 	<title>CS 184 | Final Project Proposal</title>
@@ -24,122 +33,135 @@
 </head>
 
 <body>
-<div>
-	<h1 align="middle">CS 184 - Final Project Proposal</h1>
+	<div>
+		<h1 align="middle">CS 184 - Final Project Proposal</h1>
 
-	<h2 align="middle">Position-Based Fluid Simulator</h2>
-	<h3 align="middle">Ashley Nguyen: 3031877941, Jennifer Zou: 3031880970, Z Wang: 25326943</h3>
+		<h2 align="middle">Position-Based Fluid Simulator</h2>
+		<h3 align="middle">Ashley Nguyen: 3031877941, Jennifer Zou: 3031880970, Z Wang: 25326943</h3>
 
-	<h3 align="middle">In this project, we're implementing a position-based fluid simulator to render liquids for real-time applications. We'll leverage the stability and simplicity of a Position Based Dynamics (PBD) framework, and build out features like incompressibility which are critical to realistic fluid rendering.  To do this, we'll follow a design from Macklin and Muller which uses constant density contraints. Our final application will display a scene and allow users to interact with the particles by changing parameters like size and viscosity as well as by applying external forces via cursor.
-		</h2>
-
+		<h4 align="middle">In this project, we're implementing a position-based fluid simulator to render liquids for real-time applications. We'll leverage the stability and simplicity of a Position Based Dynamics (PBD) framework, and build out features
+			like incompressibility which are critical to realistic fluid rendering. To do this, we'll follow a design from Macklin and Muller which uses constant density contraints. Our final application will display a scene and allow users to interact
+			with the particles by changing parameters like size and viscosity as well as by applying external forces via cursor.</h4>
+	</div>
+	<div>
 		<h2>Problem Description</h2>
-		Simulating fluids has real-life applications in everyday situations and is highly relevant in both practical and leisure computer graphics rendering situations. Examples of use cases include modeling ocean currents, gas flows, novel fluid interactions, and of course, the plethora of liquid-containing-scenes in films, advertisements, and games. 
-		SPH solvers have well established themselves within the field of fluid modeling; however, requiring small time steps and large smoothing radius and particle count make them difficult and compute-intensive vis-a-vis real-time applications. By using a implicit system like PBD, we'll develop an iterative solver which preserves the incompressibility and convergence guarantees of SPH's, while also resolving issues like tensile instability, time step, and smoothing radius.
-		We'll use NVIDIA’s Position Based Fluids paper
-		(http://mmacklin.com/pbf_sig_preprint.pdf) as our technical reference.
 
-
+		Simulating fluids has real-life applications in everyday situations and is highly relevant in both practical and leisure computer graphics rendering situations. Examples of use cases include modeling ocean currents, gas flows, novel fluid
+		interactions, and of course, the plethora of liquid-containing-scenes in films, advertisements, and games.
+		SPH solvers have well established themselves within the field of fluid modeling; however, requiring small time steps and large smoothing radius and particle count make them difficult and compute-intensive vis-a-vis real-time applications. By
+		using a implicit system like PBD, we'll develop an iterative solver which preserves the incompressibility and convergence guarantees of SPH's, while also resolving issues like tensile instability, time step, and smoothing radius.
+		We'll use <a href=http://mmacklin.com/pbf_sig_preprint.pdf>NVIDIA’s "Position Based Fluids" paper</a> as our technical reference.
+	</div>
+	<div>
 		<h2>Goals and Deliverables</h2>
-		<h3>Baseline Plan</h2>
-			Our plan is to render visualizations of fluids in image and video formats to gain a deeper understanding of fluid dynamics and particle interaction in computer graphics. We will accomplish this by implementing an iterative density solver (following
-			an NVIDIA paper) within a Positional Based Dynamics Framework.
+		<h3>Baseline Plan</h3>
 
-			The first step is understanding the physics. We'll then learn how WebGL works, and take a look at existing PBD solvers. To maintain incompressibility, we'll add a constant density constraint. To prevent tensile instability, we'll add an artificial pressure. Then we'll implement the solver's functionality following Macklin and Muller's pseudocode (which recalculates particle position using Newton's forces as nonlinear constraints). 
+		Our plan is to render visualizations of fluids in image and video formats to gain a deeper understanding of fluid dynamics and particle interaction in computer graphics. We will accomplish this by implementing an iterative density solver
+		(following the aforementioned NVIDIA paper) within a Positional Based Dynamics Framework.
 
-</div>
-<table style="width=1000px, margin=auto">
-        <tr>
-            <td>
-                <img src="images/waterbunny1.png" align="middle" width="400px"/>
-                <figcaption align="middle">An example simulation taken from Macklin and Muller.</figcaption>
-            </td>
-            <td>
-                <img src="images/waterbunny2.png" align="middle" width="400px"/>
-                <figcaption align="middle">Taken from Macklin and Muller. This image shows the particles.</figcaption>
-            </td>
-        </tr>
-        <br>
-        <tr>
-            <td>
-                <img src="images/demo.png" align="middle" width="400px"/>
-                <figcaption align="middle">An online interactive demo similar to what we're trying to create.</figcaption>
-            </td>
-            <td>
-                <img src="images/caustic.png" align="middle" width="400px"/>
-                <figcaption align="middle">Caustic patterns in water.</figcaption>
-            </td>
-        </tr>
-    </table>
-<div>
+		The first step is understanding the physics. We'll then learn how WebGL works, and take a look at existing PBD solvers. To maintain incompressibility, we'll add a constant density constraint. To prevent tensile instability, we'll add an
+		artificial pressure. Then we'll implement the solver's functionality following Macklin and Muller's pseudocode (which recalculates particle position using Newton's forces as nonlinear constraints).
+	</div>
 
-			We believe this project is challenging but feasible in the time given. Rendering fluids requires us to learn basic fluid dynamics and modeling equations, but the generality of this task means we have many resources available for help.
+	<div>
+		<table style="width:1000px; margin:auto; text-align:center">
+			<tr>
+				<td>
+					<img src="images/waterbunny1.png" align="middle" height="200px" />
+					<figcaption align="middle">An example simulation taken from Macklin and Muller.</figcaption>
+				</td>
+				<td>
+					<img src="images/waterbunny2.png" align="middle" height="200px" />
+					<figcaption align="middle">Taken from Macklin and Muller. This image shows the particles.</figcaption>
+				</td>
+			</tr>
+			<br>
+			<tr>
+				<td>
+					<img src="images/demo.png" align="middle" height="200px" />
+					<figcaption align="middle">An online interactive demo similar to what we're trying to create.</figcaption>
+				</td>
+				<td>
+					<img src="images/caustic.png" align="middle" height="200px" />
+					<figcaption align="middle">Caustic patterns in water.</figcaption>
+				</td>
+			</tr>
+		</table>
+	</div>
 
-			To measure quality, we'll compare our render time and computational resources to benchmarks provided in relevant research papers. The primary goal here is to render accurate, reliable, and robust fluid simulations in a reasonable time period (within 5 minutes on our PC's). For a given rendering, we can measure metrics like particle count and time step. We can perform experiments by varying frame time, steps/frame, and iterations/step, and compare our results with other fluid modeling frameworks. Following Macklin and Muller, we can even keep track of a time distribution over the steps that occur within each iteration.
+	<div>
+		We believe this project is challenging but feasible in the time given. Rendering fluids requires us to learn basic fluid dynamics and modeling equations, but the generality of this task means we have many resources available for help.
 
-			With this project, we hope to shed some light on how one's understanding of particle physics and the graphics pipeline changes as a result of extending a solid-rendering implementation to fluids. We'll seek out the differences between explicit and implicit, position and impulse-based approaches, and explore the space of solutions between these approaches. Having little Javascript experience among us means we'll also learn how to use libraries like WebGL and three.js to render and display the simulations.
+		To measure quality, we'll compare our render time and computational resources to benchmarks provided in relevant research papers. The primary goal here is to render accurate, reliable, and robust fluid simulations in a reasonable time period
+		(within 5 minutes on our PC's). For a given rendering, we can measure metrics like particle count and time step. We can perform experiments by varying frame time, steps/frame, and iterations/step, and compare our results with other fluid modeling
+		frameworks. Following Macklin and Muller, we can even keep track of a time distribution over the steps that occur within each iteration.
 
-			Lastly, we'll build out an informative and engaging website, showing the journey and approach that we took as well as sharing the resources and follow-up questions we discovered.
+		With this project, we hope to shed some light on how one's understanding of particle physics and the graphics pipeline changes as a result of extending a solid-rendering implementation to fluids. We'll seek out the differences between explicit
+		and implicit, position and impulse-based approaches, and explore the space of solutions between these approaches. Having little JavaScript experience among us means we'll also learn how to use libraries like WebGL and three.js to render and
+		display the simulations.
 
-			<h3>Aspirational Plan</h2>
-				If we complete the baseline plan, we aim to create an online simulator application that will allow users to manipulate the fluid simulation with particle size and viscosity controls in real time. The user will also be able to apply additional
-				external forces with the mouse. We can add more parameters to the application, such as gravity, "spikiness", as well as a function to move or modify the lighting in a scene. Our team personally enjoyed caustic effects between water and walls, so we could render a swimming-pool-type scene.
+		Lastly, we'll build out an informative and engaging website, showing the journey and approach that we took as well as sharing the resources and follow-up questions we discovered.
+	</div>
+	<div>
+		<h3>Aspirational Plan</h2>
+		If we complete the baseline plan, we aim to create an online simulator application that will allow users to manipulate the fluid simulation with particle size and viscosity controls in real time. The user will also be able to apply additional
+		external forces with the mouse. We can add more parameters to the application, such as gravity, "spikiness", as well as a function to move or modify the lighting in a scene. Our team personally enjoyed caustic effects between water and walls,
+		so we could render a swimming-pool-type scene.
 
-				If we really have time, we can explore, definitely test, and possibly implement different approaches beyond our constant-density PBD solver. This includes other PBD designs as well as SPH solvers and alternative frameworks like FLIP and FEM.
+		If we really have time, we can explore, definitely test, and possibly implement different approaches beyond our constant-density PBD solver. This includes other PBD designs as well as SPH solvers and alternative frameworks like FLIP and FEM.
 
-				Rendering instantly or in milliseconds is an aspirational goal for our project. If we create a interactive web app, adapting the scene to user commands with low latency is vital to seamless user experience. We will need to explore techniques
-				for optimizing the fluid simulations.
+		Rendering instantly or in milliseconds is an aspirational goal for our project. If we create a interactive web app, adapting the scene to user commands with low latency is vital to seamless user experience. We will need to explore techniques
+		for optimizing the fluid simulations.
+	</div>
+	<div>
+		<h2>Schedule</h2>
+		<p align="center">
+			<iframe src="https://calendar.google.com/calendar/b/1/embed?height=600&amp;wkst=2&amp;bgcolor=%23FFFFFF&amp;src=berkeley.edu_8f80thdarus1fg14tvhgaaj9is%40group.calendar.google.com&amp;color=%23BE6D00&amp;ctz=America%2FLos_Angeles" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+		</p>
 
-				<h2>Schedule</h2>
-				<p align="center">
-					<iframe src="https://calendar.google.com/calendar/b/1/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=berkeley.edu_8f80thdarus1fg14tvhgaaj9is%40group.calendar.google.com&amp;color=%23BE6D00&amp;ctz=America%2FLos_Angeles"
-						style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
-				</p>
+		<h2>Resources</h2>
+		Original Paper:
+		<li>"Position Based Fluids" <a href="http://mmacklin.com/pbf_sig_preprint.pdf">http://mmacklin.com/pbf_sig_preprint.pdf</a></li>
 
-				<h2>Resources</h2>
-				Original Paper:
-				<li><a href="http://mmacklin.com/pbf_sig_preprint.pdf">http://mmacklin.com/pbf_sig_preprint.pdf</a></li>
-				
-				<br>
+		<br>
 
-				Background Literature:
+		Background Literature:
+		<li><a href="http://matthias-mueller-fischer.ch/publications/posBasedDyn.pdf">http://matthias-mueller-fischer.ch/publications/posBasedDyn.pdf</a></li>
+		<li><a href="http://mmacklin.com/pbf_slides.pdf">http://mmacklin.com/pbf_slides.pdf</a></li>
+		<li><a href="http://adsabs.harvard.edu/abs/2004CoPhC.157..191M">http://adsabs.harvard.edu/abs/2004CoPhC.157..191M</a></li>
+		<li><a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/ns.pdf">http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/ns.pdf</a></li>
 
-				<li><a href="http://matthias-mueller-fischer.ch/publications/posBasedDyn.pdf">http://matthias-mueller-fischer.ch/publications/posBasedDyn.pdf</a></li>
-				<li><a href="http://mmacklin.com/pbf_slides.pdf">http://mmacklin.com/pbf_slides.pdf</a></li>
-				<li><a href="http://adsabs.harvard.edu/abs/2004CoPhC.157..191M">http://adsabs.harvard.edu/abs/2004CoPhC.157..191M</a></li>
-				<li><a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/ns.pdf">http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/ns.pdf</a></li>
+		<br>
 
-				<br>
+		Reference Projects:
+		<li><a href="http://developer.download.nvidia.com/books/HTML/gpugems/gpugems_ch38.html">http://developer.download.nvidia.com/books/HTML/gpugems/gpugems_ch38.html</a></li>
+		<li><a href="http://jamie-wong.com/2016/08/05/webgl-fluid-simulation/">http://jamie-wong.com/2016/08/05/webgl-fluid-simulation/</a></li>
+		<li><a href="https://github.com/dli/fluid">https://github.com/dli/fluid</a></li>
+		<li><a href="https://29a.ch/2012/12/16/webgl-fluid-simulation">https://29a.ch/2012/12/16/webgl-fluid-simulation</a></li>
+		<li><a href="https://github.com/PavelDoGreat/WebGL-Fluid-Simulation">https://github.com/PavelDoGreat/WebGL-Fluid-Simulation</a></li>
+		<li><a href="https://github.com/mharrys/fluids-2d">https://github.com/mharrys/fluids-2d</a></li>
+		<li><a href="https://observablehq.com/@jashkenas/webgl-fluid-simulation">https://observablehq.com/@jashkenas/webgl-fluid-simulation</a></li>
+		<li><a href="https://github.com/ollyc2015/BathBombFluidDynamics">https://github.com/ollyc2015/BathBombFluidDynamics</a></li>
 
-				Reference Projects:
-				<li><a href="http://developer.download.nvidia.com/books/HTML/gpugems/gpugems_ch38.html">http://developer.download.nvidia.com/books/HTML/gpugems/gpugems_ch38.html</a></li>
-				<li><a href="http://jamie-wong.com/2016/08/05/webgl-fluid-simulation/">http://jamie-wong.com/2016/08/05/webgl-fluid-simulation/</a></li>
-				<li><a href="https://github.com/dli/fluid">https://github.com/dli/fluid</a></li>
-				<li><a href="https://29a.ch/2012/12/16/webgl-fluid-simulation">https://29a.ch/2012/12/16/webgl-fluid-simulation</a></li>
-				<li><a href="https://github.com/PavelDoGreat/WebGL-Fluid-Simulation">https://github.com/PavelDoGreat/WebGL-Fluid-Simulation</a></li>
-				<li><a href="https://github.com/mharrys/fluids-2d">https://github.com/mharrys/fluids-2d</a></li>
-				<li><a href="https://observablehq.com/@jashkenas/webgl-fluid-simulation">https://observablehq.com/@jashkenas/webgl-fluid-simulation</a></li>
-				<li><a href="https://github.com/ollyc2015/BathBombFluidDynamics">https://github.com/ollyc2015/BathBombFluidDynamics</a></li>
-				
-				<br>
+		<br>
 
-				Video Inspiration:
-				<li><a href=https://www.youtube.com/watch?v=ureGelZPi3o>https://www.youtube.com/watch?v=ureGelZPi3o</a></li>
-				<li><a href=https://www.youtube.com/watch?v=-S8wq0dz1H4>https://www.youtube.com/watch?v=-S8wq0dz1H4</a></li>
-				<li><a href=https://www.youtube.com/watch?v=zmw-BTCbWMw>https://www.youtube.com/watch?v=zmw-BTCbWMw</a></li>
-				<li>Caustic Lighting: <a href=https://www.youtube.com/watch?v=l_0k_jGwW8Y>https://www.youtube.com/watch?v=l_0k_jGwW8Y</a></li>
-				<li>Elastic Solids: <a href=https://www.youtube.com/watch?v=qd3gKVX89qo&ab_channel=CGFreiburg>https://www.youtube.com/watch?v=qd3gKVX89qo&ab_channel=CGFreiburg</a></li>
+		Video Inspiration:
+		<li><a href=https://www.youtube.com/watch?v=ureGelZPi3o>https://www.youtube.com/watch?v=ureGelZPi3o</a></li>
+		<li><a href=https://www.youtube.com/watch?v=-S8wq0dz1H4>https://www.youtube.com/watch?v=-S8wq0dz1H4</a></li>
+		<li><a href=https://www.youtube.com/watch?v=zmw-BTCbWMw>https://www.youtube.com/watch?v=zmw-BTCbWMw</a></li>
+		<li>Caustic Lighting: <a href=https://www.youtube.com/watch?v=l_0k_jGwW8Y>https://www.youtube.com/watch?v=l_0k_jGwW8Y</a></li>
+		<li>Elastic Solids: <a href=https://www.youtube.com/watch?v=qd3gKVX89qo&ab_channel=CGFreiburg>https://www.youtube.com/watch?v=qd3gKVX89qo&ab_channel=CGFreiburg</a></li>
 
-				<br>
+		<br>
 
-				Software:
-				<li>WebGL</li>
-				<li>OCF GPU cluster</li>
-				<li>Three.js</li>
-				<li>HTML</li>
-				<li>Webstorm</li>
-				<li>AWS EC2/S3 (if OCF fails)</li>
-</div>
+		Software:
+		<li>WebGL</li>
+		<li>OCF GPU cluster: <a href="https://ocf.io/hpc">https://ocf.io/hpc</a></li>
+		<li>AWS EC2/S3 (if OCF fails)</li>
+		<li>Three.js</li>
+		<li>HTML</li>
+		<li>Webstorm</li>
+	</div>
 </body>
 
 </html>
