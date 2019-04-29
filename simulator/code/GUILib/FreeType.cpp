@@ -1,8 +1,8 @@
 //Include our header file.
 #include "FreeType.h"
-#include <ftglyph.h>
-#include <ftoutln.h>
-#include <fttrigon.h>
+#include <freetype/ftglyph.h>
+#include <freetype/ftoutln.h>
+#include <freetype/fttrigon.h>
 #define GLFW_INCLUDE_GLU
 #include <GLFW/glfw3.h>
 
