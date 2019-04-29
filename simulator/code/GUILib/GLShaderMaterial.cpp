@@ -3,7 +3,7 @@
 #ifdef _WIN32
 #include <include/glew.h>
 #else
-#include <GL/glew.h>
+#include <glew.h>
 #endif
 
 #define GLFW_INCLUDE_GLU

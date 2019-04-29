@@ -16,8 +16,8 @@ public:
 	FreeTypeFont();
 	~FreeTypeFont();
 
-	float height;			// the height of the font.
-	uint * textures;	// texture id's 
+	float height;		// the height of the font.
+	uint * textures;	// texture id's
 	uint list_base;		// display list id
 
 	//The init function will create a font of

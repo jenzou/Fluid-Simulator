@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.13)
-project(PBD)
+project(simulator)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -44,7 +44,6 @@ include_directories(code/include/eigen3.2.5/Eigen/src)
 include_directories(code/include/eigen3.2.5/Eigen/src/Cholesky)
 include_directories(code/include/eigen3.2.5/Eigen/src/CholmodSupport)
 include_directories(code/include/eigen3.2.5/Eigen/src/Core)
-include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch)
 include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch/AltiVec)
 include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch/Default)
 include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch/NEON)
@@ -105,10 +104,10 @@ include_directories(code/include/eigen3.2.5/unsupported/Eigen/src/Splines)
 include_directories(code/include/eigen3.2.5/unsupported/Eigen/src/SVD)
 include_directories(code/include/eigen3.2.5/unsupported/test)
 include_directories(code/include/eigen3.2.5/unsupported/test/mpreal)
-include_directories(code/include/ft2.5.5)
-include_directories(code/include/ft2.5.5/config)
-include_directories(code/include/ft2.5.5/internal)
-include_directories(code/include/ft2.5.5/internal/services)
+include_directories(code/include/freetype)
+include_directories(code/include/freetype/config)
+include_directories(code/include/freetype/internal)
+include_directories(code/include/freetype/internal/services)
 include_directories(code/include/GLFW)
 include_directories(code/MathLib)
 include_directories(code/meshes)
@@ -118,7 +117,7 @@ include_directories(code/screenShots)
 include_directories(code/Utils)
 include_directories(libs)
 
-add_executable(PBD
+add_executable(simulator
         code/Assignment2/Assignment2.filters
         code/Assignment2/Assignment2.user
         code/Assignment2/Assignment2.vcxproj
@@ -267,7 +266,6 @@ add_executable(PBD
         code/include/eigen3.2.5/bench/btl/libs/blitz/btl_blitz.cpp
         code/include/eigen3.2.5/bench/btl/libs/blitz/btl_tiny_blitz.cpp
         code/include/eigen3.2.5/bench/btl/libs/blitz/CMakeLists.txt
-        code/include/eigen3.2.5/bench/btl/libs/blitz/tiny_blitz_interface.hh
         code/include/eigen3.2.5/bench/btl/libs/eigen2/btl_tiny_eigen2.cpp
         code/include/eigen3.2.5/bench/btl/libs/eigen2/CMakeLists.txt
         code/include/eigen3.2.5/bench/btl/libs/eigen2/eigen2_interface.hh
@@ -1570,99 +1568,101 @@ add_executable(PBD
         code/include/eigen3.2.5/eigen3.pc.in
         code/include/eigen3.2.5/INSTALL
         code/include/eigen3.2.5/signature_of_eigen3_matrix_library
-        code/include/ft2.5.5/config/ftconfig.h
-        code/include/ft2.5.5/config/ftheader.h
-        code/include/ft2.5.5/config/ftmodule.h
-        code/include/ft2.5.5/config/ftoption.h
-        code/include/ft2.5.5/config/ftstdlib.h
-        code/include/ft2.5.5/internal/services/svbdf.h
-        code/include/ft2.5.5/internal/services/svcid.h
-        code/include/ft2.5.5/internal/services/svgldict.h
-        code/include/ft2.5.5/internal/services/svgxval.h
-        code/include/ft2.5.5/internal/services/svkern.h
-        code/include/ft2.5.5/internal/services/svmm.h
-        code/include/ft2.5.5/internal/services/svotval.h
-        code/include/ft2.5.5/internal/services/svpfr.h
-        code/include/ft2.5.5/internal/services/svpostnm.h
-        code/include/ft2.5.5/internal/services/svprop.h
-        code/include/ft2.5.5/internal/services/svpscmap.h
-        code/include/ft2.5.5/internal/services/svpsinfo.h
-        code/include/ft2.5.5/internal/services/svsfnt.h
-        code/include/ft2.5.5/internal/services/svttcmap.h
-        code/include/ft2.5.5/internal/services/svtteng.h
-        code/include/ft2.5.5/internal/services/svttglyf.h
-        code/include/ft2.5.5/internal/services/svwinfnt.h
-        code/include/ft2.5.5/internal/services/svxf86nm.h
-        code/include/ft2.5.5/internal/autohint.h
-        code/include/ft2.5.5/internal/ftcalc.h
-        code/include/ft2.5.5/internal/ftdebug.h
-        code/include/ft2.5.5/internal/ftdriver.h
-        code/include/ft2.5.5/internal/ftgloadr.h
-        code/include/ft2.5.5/internal/ftmemory.h
-        code/include/ft2.5.5/internal/ftobjs.h
-        code/include/ft2.5.5/internal/ftpic.h
-        code/include/ft2.5.5/internal/ftrfork.h
-        code/include/ft2.5.5/internal/ftserv.h
-        code/include/ft2.5.5/internal/ftstream.h
-        code/include/ft2.5.5/internal/fttrace.h
-        code/include/ft2.5.5/internal/ftvalid.h
-        code/include/ft2.5.5/internal/internal.h
-        code/include/ft2.5.5/internal/psaux.h
-        code/include/ft2.5.5/internal/pshints.h
-        code/include/ft2.5.5/internal/sfnt.h
-        code/include/ft2.5.5/internal/t1types.h
-        code/include/ft2.5.5/internal/tttypes.h
-        code/include/ft2.5.5/freetype.h
-        code/include/ft2.5.5/ft2build.h
-        code/include/ft2.5.5/ftadvanc.h
-        code/include/ft2.5.5/ftautoh.h
-        code/include/ft2.5.5/ftbbox.h
-        code/include/ft2.5.5/ftbdf.h
-        code/include/ft2.5.5/ftbitmap.h
-        code/include/ft2.5.5/ftbzip2.h
-        code/include/ft2.5.5/ftcache.h
-        code/include/ft2.5.5/ftcffdrv.h
-        code/include/ft2.5.5/ftchapters.h
-        code/include/ft2.5.5/ftcid.h
-        code/include/ft2.5.5/fterrdef.h
-        code/include/ft2.5.5/fterrors.h
-        code/include/ft2.5.5/ftgasp.h
-        code/include/ft2.5.5/ftglyph.h
-        code/include/ft2.5.5/ftgxval.h
-        code/include/ft2.5.5/ftgzip.h
-        code/include/ft2.5.5/ftimage.h
-        code/include/ft2.5.5/ftincrem.h
-        code/include/ft2.5.5/ftlcdfil.h
-        code/include/ft2.5.5/ftlist.h
-        code/include/ft2.5.5/ftlzw.h
-        code/include/ft2.5.5/ftmac.h
-        code/include/ft2.5.5/ftmm.h
-        code/include/ft2.5.5/ftmodapi.h
-        code/include/ft2.5.5/ftmoderr.h
-        code/include/ft2.5.5/ftoption.h
-        code/include/ft2.5.5/ftotval.h
-        code/include/ft2.5.5/ftoutln.h
-        code/include/ft2.5.5/ftpfr.h
-        code/include/ft2.5.5/ftrender.h
-        code/include/ft2.5.5/ftsizes.h
-        code/include/ft2.5.5/ftsnames.h
-        code/include/ft2.5.5/ftstroke.h
-        code/include/ft2.5.5/ftsynth.h
-        code/include/ft2.5.5/ftsystem.h
-        code/include/ft2.5.5/fttrigon.h
-        code/include/ft2.5.5/ftttdrv.h
-        code/include/ft2.5.5/fttypes.h
-        code/include/ft2.5.5/ftwinfnt.h
-        code/include/ft2.5.5/ftxf86.h
-        code/include/ft2.5.5/t1tables.h
-        code/include/ft2.5.5/ttnameid.h
-        code/include/ft2.5.5/tttables.h
-        code/include/ft2.5.5/tttags.h
-        code/include/ft2.5.5/ttunpat.h
+        code/include/freetype/config/ftconfig.h
+        code/include/freetype/config/ftheader.h
+        code/include/freetype/config/ftmodule.h
+        code/include/freetype/config/ftoption.h
+        code/include/freetype/config/ftstdlib.h
+        code/include/freetype/internal/services/svbdf.h
+        code/include/freetype/internal/services/svcid.h
+        code/include/freetype/internal/services/svfntfmt.h
+        code/include/freetype/internal/services/svgldict.h
+        code/include/freetype/internal/services/svgxval.h
+        code/include/freetype/internal/services/svkern.h
+        code/include/freetype/internal/services/svmetric.h
+        code/include/freetype/internal/services/svmm.h
+        code/include/freetype/internal/services/svotval.h
+        code/include/freetype/internal/services/svpfr.h
+        code/include/freetype/internal/services/svpostnm.h
+        code/include/freetype/internal/services/svprop.h
+        code/include/freetype/internal/services/svpscmap.h
+        code/include/freetype/internal/services/svpsinfo.h
+        code/include/freetype/internal/services/svsfnt.h
+        code/include/freetype/internal/services/svttcmap.h
+        code/include/freetype/internal/services/svtteng.h
+        code/include/freetype/internal/services/svttglyf.h
+        code/include/freetype/internal/services/svwinfnt.h
+        code/include/freetype/internal/autohint.h
+        code/include/freetype/internal/ftcalc.h
+        code/include/freetype/internal/ftdebug.h
+        code/include/freetype/internal/ftdriver.h
+        code/include/freetype/internal/ftgloadr.h
+        code/include/freetype/internal/fthash.h
+        code/include/freetype/internal/ftmemory.h
+        code/include/freetype/internal/ftobjs.h
+        code/include/freetype/internal/ftpic.h
+        code/include/freetype/internal/ftrfork.h
+        code/include/freetype/internal/ftserv.h
+        code/include/freetype/internal/ftstream.h
+        code/include/freetype/internal/fttrace.h
+        code/include/freetype/internal/ftvalid.h
+        code/include/freetype/internal/internal.h
+        code/include/freetype/internal/psaux.h
+        code/include/freetype/internal/pshints.h
+        code/include/freetype/internal/sfnt.h
+        code/include/freetype/internal/t1types.h
+        code/include/freetype/internal/tttypes.h
+        code/include/freetype/freetype.h
+        code/include/freetype/ftadvanc.h
+        code/include/freetype/ftautoh.h
+        code/include/freetype/ftbbox.h
+        code/include/freetype/ftbdf.h
+        code/include/freetype/ftbitmap.h
+        code/include/freetype/ftbzip2.h
+        code/include/freetype/ftcache.h
+        code/include/freetype/ftcffdrv.h
+        code/include/freetype/ftchapters.h
+        code/include/freetype/ftcid.h
+        code/include/freetype/fterrdef.h
+        code/include/freetype/fterrors.h
+        code/include/freetype/ftfntfmt.h
+        code/include/freetype/ftgasp.h
+        code/include/freetype/ftglyph.h
+        code/include/freetype/ftgxval.h
+        code/include/freetype/ftgzip.h
+        code/include/freetype/ftimage.h
+        code/include/freetype/ftincrem.h
+        code/include/freetype/ftlcdfil.h
+        code/include/freetype/ftlist.h
+        code/include/freetype/ftlzw.h
+        code/include/freetype/ftmac.h
+        code/include/freetype/ftmm.h
+        code/include/freetype/ftmodapi.h
+        code/include/freetype/ftmoderr.h
+        code/include/freetype/ftotval.h
+        code/include/freetype/ftoutln.h
+        code/include/freetype/ftpcfdrv.h
+        code/include/freetype/ftpfr.h
+        code/include/freetype/ftrender.h
+        code/include/freetype/ftsizes.h
+        code/include/freetype/ftsnames.h
+        code/include/freetype/ftstroke.h
+        code/include/freetype/ftsynth.h
+        code/include/freetype/ftsystem.h
+        code/include/freetype/fttrigon.h
+        code/include/freetype/ftttdrv.h
+        code/include/freetype/fttypes.h
+        code/include/freetype/ftwinfnt.h
+        code/include/freetype/t1tables.h
+        code/include/freetype/ttnameid.h
+        code/include/freetype/tttables.h
+        code/include/freetype/tttags.h
+        code/include/freetype/ttunpat.h
         code/include/GLFW/glfw3.h
         code/include/GLFW/glfw3native.h
         code/include/AntTweakBar.h
         code/include/fbxsdk.h
+        code/include/ft2build.h
         code/include/glew.h
         code/MathLib/MathLib.h
         code/MathLib/MathLib.vcxproj
@@ -1742,4 +1742,5 @@ add_executable(PBD
         libs/freetype255.lib
         libs/freetype255d.lib
         libs/glew32.dll
-        libs/glew32.lib)
+        libs/glew32.lib
+        README.md code/include/eigen3.2.5/bench/btl/libs/blitz/array.h code/include/eigen3.2.5/bench/btl/libs/blitz/tiny_blitz_interface.h)

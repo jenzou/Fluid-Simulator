@@ -1,7 +1,7 @@
 #ifdef _WIN32
 #include <include/glew.h>
 #else
-#include <GL/glew.h>
+#include <glew.h>
 #endif
 
 #include "GLApplication.h"
