@@ -1,4 +1,4 @@
-# Install script for directory: /Users/jenzou/Documents/College/Junior/2nd Semester/CS 184/Projects/final/simulator
+# Install script for directory: /Users/jenzou/Documents/College/Junior/2nd Semester/CS 184/Projects/Fluid-Simulator/simulator
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/jenzou/Documents/College/Junior/2nd Semester/CS 184/Projects/final/simulator/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/jenzou/Documents/College/Junior/2nd Semester/CS 184/Projects/Fluid-Simulator/simulator/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
