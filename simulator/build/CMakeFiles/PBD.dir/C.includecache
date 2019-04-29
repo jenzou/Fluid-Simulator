@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/jenzou/Documents/College/Junior/2nd Semester/CS 184/Projects/final/simulator/code/include/eigen3.2.5/demos/mix_eigen_and_c/binary_library.h
+
+/Users/jenzou/Documents/College/Junior/2nd Semester/CS 184/Projects/final/simulator/code/include/eigen3.2.5/demos/mix_eigen_and_c/example.c
+binary_library.h
+/Users/jenzou/Documents/College/Junior/2nd Semester/CS 184/Projects/final/simulator/code/include/eigen3.2.5/demos/mix_eigen_and_c/binary_library.h
+stdio.h
+/Users/jenzou/Documents/College/Junior/2nd Semester/CS 184/Projects/final/simulator/code/include/eigen3.2.5/demos/mix_eigen_and_c/stdio.h
+
