@@ -4,7 +4,6 @@ project(simulator)
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
-include_directories(cmake-build-debug)
 include_directories(code)
 include_directories(code/Assignment2)
 include_directories(code/data)
@@ -66,10 +65,6 @@ include_directories(code/Utils)
 include_directories(libs)
 
 add_executable(simulator
-        cmake-build-debug/cmake_install.cmake
-        cmake-build-debug/CMakeCache.txt
-        cmake-build-debug/Makefile
-        cmake-build-debug/simulator.cbp
         code/Assignment2/Assignment2.filters
         code/Assignment2/Assignment2.user
         code/Assignment2/Assignment2.vcxproj
@@ -650,7 +645,6 @@ add_executable(simulator
         code/generate.sh
         code/generate_all.sh
         code/make_makefile.sh
-        code/Makefile
         code/README.txt
         code/SCP.sln
         libs/glfw-3.1.1/debug/glfw3.lib
@@ -668,6 +662,4 @@ add_executable(simulator
         libs/libGLEW.a
         libs/libGLEW.so.2.1.0
         libs/libglfw3.a
-        CMakeCache.txt
-        CMakeLists.txt
         README.md)
