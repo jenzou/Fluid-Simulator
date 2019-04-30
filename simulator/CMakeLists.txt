@@ -1,14 +1,57 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.14)
 project(simulator)
 
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
+include_directories(cmake-build-debug)
 include_directories(code)
 include_directories(code/Assignment2)
 include_directories(code/data)
 include_directories(code/GUILib)
 include_directories(code/include)
+include_directories(code/include/eigen3.2.5)
+include_directories(code/include/eigen3.2.5/Eigen)
+include_directories(code/include/eigen3.2.5/Eigen/src)
+include_directories(code/include/eigen3.2.5/Eigen/src/Cholesky)
+include_directories(code/include/eigen3.2.5/Eigen/src/CholmodSupport)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch/AltiVec)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch/AVX)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch/AVX512)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch/CUDA)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch/Default)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch/NEON)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch/SSE)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core/arch/ZVector)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core/functors)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core/products)
+include_directories(code/include/eigen3.2.5/Eigen/src/Core/util)
+include_directories(code/include/eigen3.2.5/Eigen/src/Eigenvalues)
+include_directories(code/include/eigen3.2.5/Eigen/src/Geometry)
+include_directories(code/include/eigen3.2.5/Eigen/src/Geometry/arch)
+include_directories(code/include/eigen3.2.5/Eigen/src/Householder)
+include_directories(code/include/eigen3.2.5/Eigen/src/IterativeLinearSolvers)
+include_directories(code/include/eigen3.2.5/Eigen/src/Jacobi)
+include_directories(code/include/eigen3.2.5/Eigen/src/LU)
+include_directories(code/include/eigen3.2.5/Eigen/src/LU/arch)
+include_directories(code/include/eigen3.2.5/Eigen/src/MetisSupport)
+include_directories(code/include/eigen3.2.5/Eigen/src/misc)
+include_directories(code/include/eigen3.2.5/Eigen/src/OrderingMethods)
+include_directories(code/include/eigen3.2.5/Eigen/src/PardisoSupport)
+include_directories(code/include/eigen3.2.5/Eigen/src/PaStiXSupport)
+include_directories(code/include/eigen3.2.5/Eigen/src/plugins)
+include_directories(code/include/eigen3.2.5/Eigen/src/QR)
+include_directories(code/include/eigen3.2.5/Eigen/src/SparseCholesky)
+include_directories(code/include/eigen3.2.5/Eigen/src/SparseCore)
+include_directories(code/include/eigen3.2.5/Eigen/src/SparseLU)
+include_directories(code/include/eigen3.2.5/Eigen/src/SparseQR)
+include_directories(code/include/eigen3.2.5/Eigen/src/SPQRSupport)
+include_directories(code/include/eigen3.2.5/Eigen/src/StlSupport)
+include_directories(code/include/eigen3.2.5/Eigen/src/SuperLUSupport)
+include_directories(code/include/eigen3.2.5/Eigen/src/SVD)
+include_directories(code/include/eigen3.2.5/Eigen/src/UmfPackSupport)
 include_directories(code/include/freetype)
 include_directories(code/include/freetype/config)
 include_directories(code/include/freetype/internal)
@@ -17,11 +60,16 @@ include_directories(code/include/GLFW)
 include_directories(code/MathLib)
 include_directories(code/meshes)
 include_directories(code/OptimizationLib)
+include_directories(code/out)
 include_directories(code/screenShots)
 include_directories(code/Utils)
 include_directories(libs)
 
 add_executable(simulator
+        cmake-build-debug/cmake_install.cmake
+        cmake-build-debug/CMakeCache.txt
+        cmake-build-debug/Makefile
+        cmake-build-debug/simulator.cbp
         code/Assignment2/Assignment2.filters
         code/Assignment2/Assignment2.user
         code/Assignment2/Assignment2.vcxproj
@@ -93,6 +141,308 @@ add_executable(simulator
         code/GUILib/TransformWidget.h
         code/GUILib/TranslateWidget.cpp
         code/GUILib/TranslateWidget.h
+        code/include/eigen3.2.5/Eigen/src/Cholesky/LDLT.h
+        code/include/eigen3.2.5/Eigen/src/Cholesky/LLT.h
+        code/include/eigen3.2.5/Eigen/src/Cholesky/LLT_LAPACKE.h
+        code/include/eigen3.2.5/Eigen/src/CholmodSupport/CholmodSupport.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/AltiVec/Complex.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/AltiVec/MathFunctions.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/AltiVec/PacketMath.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/AVX/Complex.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/AVX/MathFunctions.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/AVX/PacketMath.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/AVX/TypeCasting.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/AVX512/MathFunctions.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/AVX512/PacketMath.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/CUDA/Complex.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/CUDA/Half.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/CUDA/MathFunctions.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/CUDA/PacketMath.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/CUDA/PacketMathHalf.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/CUDA/TypeCasting.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/Default/ConjHelper.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/Default/Settings.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/NEON/Complex.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/NEON/MathFunctions.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/NEON/PacketMath.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/SSE/Complex.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/SSE/MathFunctions.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/SSE/PacketMath.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/SSE/TypeCasting.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/ZVector/Complex.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/ZVector/MathFunctions.h
+        code/include/eigen3.2.5/Eigen/src/Core/arch/ZVector/PacketMath.h
+        code/include/eigen3.2.5/Eigen/src/Core/functors/AssignmentFunctors.h
+        code/include/eigen3.2.5/Eigen/src/Core/functors/BinaryFunctors.h
+        code/include/eigen3.2.5/Eigen/src/Core/functors/NullaryFunctors.h
+        code/include/eigen3.2.5/Eigen/src/Core/functors/StlFunctors.h
+        code/include/eigen3.2.5/Eigen/src/Core/functors/TernaryFunctors.h
+        code/include/eigen3.2.5/Eigen/src/Core/functors/UnaryFunctors.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/GeneralBlockPanelKernel.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/GeneralMatrixMatrix.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/GeneralMatrixMatrix_BLAS.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/GeneralMatrixMatrixTriangular_BLAS.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/GeneralMatrixVector.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/GeneralMatrixVector_BLAS.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/Parallelizer.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/SelfadjointMatrixMatrix.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/SelfadjointMatrixMatrix_BLAS.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/SelfadjointMatrixVector.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/SelfadjointMatrixVector_BLAS.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/SelfadjointProduct.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/SelfadjointRank2Update.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/TriangularMatrixMatrix.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/TriangularMatrixMatrix_BLAS.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/TriangularMatrixVector.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/TriangularMatrixVector_BLAS.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/TriangularSolverMatrix.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/TriangularSolverMatrix_BLAS.h
+        code/include/eigen3.2.5/Eigen/src/Core/products/TriangularSolverVector.h
+        code/include/eigen3.2.5/Eigen/src/Core/util/BlasUtil.h
+        code/include/eigen3.2.5/Eigen/src/Core/util/Constants.h
+        code/include/eigen3.2.5/Eigen/src/Core/util/DisableStupidWarnings.h
+        code/include/eigen3.2.5/Eigen/src/Core/util/ForwardDeclarations.h
+        code/include/eigen3.2.5/Eigen/src/Core/util/Macros.h
+        code/include/eigen3.2.5/Eigen/src/Core/util/Memory.h
+        code/include/eigen3.2.5/Eigen/src/Core/util/Meta.h
+        code/include/eigen3.2.5/Eigen/src/Core/util/MKL_support.h
+        code/include/eigen3.2.5/Eigen/src/Core/util/NonMPL2.h
+        code/include/eigen3.2.5/Eigen/src/Core/util/ReenableStupidWarnings.h
+        code/include/eigen3.2.5/Eigen/src/Core/util/StaticAssert.h
+        code/include/eigen3.2.5/Eigen/src/Core/util/XprHelper.h
+        code/include/eigen3.2.5/Eigen/src/Core/Array.h
+        code/include/eigen3.2.5/Eigen/src/Core/ArrayBase.h
+        code/include/eigen3.2.5/Eigen/src/Core/ArrayWrapper.h
+        code/include/eigen3.2.5/Eigen/src/Core/Assign.h
+        code/include/eigen3.2.5/Eigen/src/Core/Assign_MKL.h
+        code/include/eigen3.2.5/Eigen/src/Core/AssignEvaluator.h
+        code/include/eigen3.2.5/Eigen/src/Core/BandMatrix.h
+        code/include/eigen3.2.5/Eigen/src/Core/Block.h
+        code/include/eigen3.2.5/Eigen/src/Core/BooleanRedux.h
+        code/include/eigen3.2.5/Eigen/src/Core/CommaInitializer.h
+        code/include/eigen3.2.5/Eigen/src/Core/ConditionEstimator.h
+        code/include/eigen3.2.5/Eigen/src/Core/CoreEvaluators.h
+        code/include/eigen3.2.5/Eigen/src/Core/CoreIterators.h
+        code/include/eigen3.2.5/Eigen/src/Core/CwiseBinaryOp.h
+        code/include/eigen3.2.5/Eigen/src/Core/CwiseNullaryOp.h
+        code/include/eigen3.2.5/Eigen/src/Core/CwiseTernaryOp.h
+        code/include/eigen3.2.5/Eigen/src/Core/CwiseUnaryOp.h
+        code/include/eigen3.2.5/Eigen/src/Core/CwiseUnaryView.h
+        code/include/eigen3.2.5/Eigen/src/Core/DenseBase.h
+        code/include/eigen3.2.5/Eigen/src/Core/DenseCoeffsBase.h
+        code/include/eigen3.2.5/Eigen/src/Core/DenseStorage.h
+        code/include/eigen3.2.5/Eigen/src/Core/Diagonal.h
+        code/include/eigen3.2.5/Eigen/src/Core/DiagonalMatrix.h
+        code/include/eigen3.2.5/Eigen/src/Core/DiagonalProduct.h
+        code/include/eigen3.2.5/Eigen/src/Core/Dot.h
+        code/include/eigen3.2.5/Eigen/src/Core/EigenBase.h
+        code/include/eigen3.2.5/Eigen/src/Core/ForceAlignedAccess.h
+        code/include/eigen3.2.5/Eigen/src/Core/Fuzzy.h
+        code/include/eigen3.2.5/Eigen/src/Core/GeneralProduct.h
+        code/include/eigen3.2.5/Eigen/src/Core/GenericPacketMath.h
+        code/include/eigen3.2.5/Eigen/src/Core/GlobalFunctions.h
+        code/include/eigen3.2.5/Eigen/src/Core/Inverse.h
+        code/include/eigen3.2.5/Eigen/src/Core/IO.h
+        code/include/eigen3.2.5/Eigen/src/Core/Map.h
+        code/include/eigen3.2.5/Eigen/src/Core/MapBase.h
+        code/include/eigen3.2.5/Eigen/src/Core/MathFunctions.h
+        code/include/eigen3.2.5/Eigen/src/Core/MathFunctionsImpl.h
+        code/include/eigen3.2.5/Eigen/src/Core/Matrix.h
+        code/include/eigen3.2.5/Eigen/src/Core/MatrixBase.h
+        code/include/eigen3.2.5/Eigen/src/Core/NestByValue.h
+        code/include/eigen3.2.5/Eigen/src/Core/NoAlias.h
+        code/include/eigen3.2.5/Eigen/src/Core/NumTraits.h
+        code/include/eigen3.2.5/Eigen/src/Core/PermutationMatrix.h
+        code/include/eigen3.2.5/Eigen/src/Core/PlainObjectBase.h
+        code/include/eigen3.2.5/Eigen/src/Core/Product.h
+        code/include/eigen3.2.5/Eigen/src/Core/ProductEvaluators.h
+        code/include/eigen3.2.5/Eigen/src/Core/Random.h
+        code/include/eigen3.2.5/Eigen/src/Core/Redux.h
+        code/include/eigen3.2.5/Eigen/src/Core/Ref.h
+        code/include/eigen3.2.5/Eigen/src/Core/Replicate.h
+        code/include/eigen3.2.5/Eigen/src/Core/ReturnByValue.h
+        code/include/eigen3.2.5/Eigen/src/Core/Reverse.h
+        code/include/eigen3.2.5/Eigen/src/Core/Select.h
+        code/include/eigen3.2.5/Eigen/src/Core/SelfAdjointView.h
+        code/include/eigen3.2.5/Eigen/src/Core/SelfCwiseBinaryOp.h
+        code/include/eigen3.2.5/Eigen/src/Core/Solve.h
+        code/include/eigen3.2.5/Eigen/src/Core/SolverBase.h
+        code/include/eigen3.2.5/Eigen/src/Core/SolveTriangular.h
+        code/include/eigen3.2.5/Eigen/src/Core/StableNorm.h
+        code/include/eigen3.2.5/Eigen/src/Core/Stride.h
+        code/include/eigen3.2.5/Eigen/src/Core/Swap.h
+        code/include/eigen3.2.5/Eigen/src/Core/Transpose.h
+        code/include/eigen3.2.5/Eigen/src/Core/Transpositions.h
+        code/include/eigen3.2.5/Eigen/src/Core/TriangularMatrix.h
+        code/include/eigen3.2.5/Eigen/src/Core/VectorBlock.h
+        code/include/eigen3.2.5/Eigen/src/Core/VectorwiseOp.h
+        code/include/eigen3.2.5/Eigen/src/Core/Visitor.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/ComplexEigenSolver.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/ComplexSchur.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/EigenSolver.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/HessenbergDecomposition.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/RealQZ.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/RealSchur.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h
+        code/include/eigen3.2.5/Eigen/src/Eigenvalues/Tridiagonalization.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/arch/Geometry_SSE.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/AlignedBox.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/AngleAxis.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/EulerAngles.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/Homogeneous.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/Hyperplane.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/OrthoMethods.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/ParametrizedLine.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/Quaternion.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/Rotation2D.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/RotationBase.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/Scaling.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/Transform.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/Translation.h
+        code/include/eigen3.2.5/Eigen/src/Geometry/Umeyama.h
+        code/include/eigen3.2.5/Eigen/src/Householder/BlockHouseholder.h
+        code/include/eigen3.2.5/Eigen/src/Householder/Householder.h
+        code/include/eigen3.2.5/Eigen/src/Householder/HouseholderSequence.h
+        code/include/eigen3.2.5/Eigen/src/IterativeLinearSolvers/BasicPreconditioners.h
+        code/include/eigen3.2.5/Eigen/src/IterativeLinearSolvers/BiCGSTAB.h
+        code/include/eigen3.2.5/Eigen/src/IterativeLinearSolvers/ConjugateGradient.h
+        code/include/eigen3.2.5/Eigen/src/IterativeLinearSolvers/IncompleteCholesky.h
+        code/include/eigen3.2.5/Eigen/src/IterativeLinearSolvers/IncompleteLUT.h
+        code/include/eigen3.2.5/Eigen/src/IterativeLinearSolvers/IterativeSolverBase.h
+        code/include/eigen3.2.5/Eigen/src/IterativeLinearSolvers/LeastSquareConjugateGradient.h
+        code/include/eigen3.2.5/Eigen/src/IterativeLinearSolvers/SolveWithGuess.h
+        code/include/eigen3.2.5/Eigen/src/Jacobi/Jacobi.h
+        code/include/eigen3.2.5/Eigen/src/LU/arch/Inverse_SSE.h
+        code/include/eigen3.2.5/Eigen/src/LU/Determinant.h
+        code/include/eigen3.2.5/Eigen/src/LU/FullPivLU.h
+        code/include/eigen3.2.5/Eigen/src/LU/InverseImpl.h
+        code/include/eigen3.2.5/Eigen/src/LU/PartialPivLU.h
+        code/include/eigen3.2.5/Eigen/src/LU/PartialPivLU_LAPACKE.h
+        code/include/eigen3.2.5/Eigen/src/MetisSupport/MetisSupport.h
+        code/include/eigen3.2.5/Eigen/src/misc/blas.h
+        code/include/eigen3.2.5/Eigen/src/misc/Image.h
+        code/include/eigen3.2.5/Eigen/src/misc/Kernel.h
+        code/include/eigen3.2.5/Eigen/src/misc/lapack.h
+        code/include/eigen3.2.5/Eigen/src/misc/lapacke.h
+        code/include/eigen3.2.5/Eigen/src/misc/lapacke_mangling.h
+        code/include/eigen3.2.5/Eigen/src/misc/RealSvd2x2.h
+        code/include/eigen3.2.5/Eigen/src/OrderingMethods/Amd.h
+        code/include/eigen3.2.5/Eigen/src/OrderingMethods/Eigen_Colamd.h
+        code/include/eigen3.2.5/Eigen/src/OrderingMethods/Ordering.h
+        code/include/eigen3.2.5/Eigen/src/PardisoSupport/PardisoSupport.h
+        code/include/eigen3.2.5/Eigen/src/PaStiXSupport/PaStiXSupport.h
+        code/include/eigen3.2.5/Eigen/src/plugins/ArrayCwiseBinaryOps.h
+        code/include/eigen3.2.5/Eigen/src/plugins/ArrayCwiseUnaryOps.h
+        code/include/eigen3.2.5/Eigen/src/plugins/BlockMethods.h
+        code/include/eigen3.2.5/Eigen/src/plugins/CommonCwiseBinaryOps.h
+        code/include/eigen3.2.5/Eigen/src/plugins/CommonCwiseUnaryOps.h
+        code/include/eigen3.2.5/Eigen/src/plugins/MatrixCwiseBinaryOps.h
+        code/include/eigen3.2.5/Eigen/src/plugins/MatrixCwiseUnaryOps.h
+        code/include/eigen3.2.5/Eigen/src/QR/ColPivHouseholderQR.h
+        code/include/eigen3.2.5/Eigen/src/QR/ColPivHouseholderQR_LAPACKE.h
+        code/include/eigen3.2.5/Eigen/src/QR/CompleteOrthogonalDecomposition.h
+        code/include/eigen3.2.5/Eigen/src/QR/FullPivHouseholderQR.h
+        code/include/eigen3.2.5/Eigen/src/QR/HouseholderQR.h
+        code/include/eigen3.2.5/Eigen/src/QR/HouseholderQR_LAPACKE.h
+        code/include/eigen3.2.5/Eigen/src/SparseCholesky/SimplicialCholesky.h
+        code/include/eigen3.2.5/Eigen/src/SparseCholesky/SimplicialCholesky_impl.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/AmbiVector.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/CompressedStorage.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/ConservativeSparseSparseProduct.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/MappedSparseMatrix.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseAssign.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseBlock.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseColEtree.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseCompressedBase.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseCwiseBinaryOp.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseCwiseUnaryOp.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseDenseProduct.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseDiagonalProduct.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseDot.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseFuzzy.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseMap.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseMatrix.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseMatrixBase.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparsePermutation.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseProduct.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseRedux.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseRef.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseSelfAdjointView.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseSolverBase.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseSparseProductWithPruning.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseTranspose.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseTriangularView.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseUtil.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseVector.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/SparseView.h
+        code/include/eigen3.2.5/Eigen/src/SparseCore/TriangularSolver.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_column_bmod.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_column_dfs.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_copy_to_ucol.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_gemm_kernel.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_heap_relax_snode.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_kernel_bmod.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_Memory.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_panel_bmod.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_panel_dfs.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_pivotL.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_pruneL.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_relax_snode.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_Structs.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_SupernodalMatrix.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLU_Utils.h
+        code/include/eigen3.2.5/Eigen/src/SparseLU/SparseLUImpl.h
+        code/include/eigen3.2.5/Eigen/src/SparseQR/SparseQR.h
+        code/include/eigen3.2.5/Eigen/src/SPQRSupport/SuiteSparseQRSupport.h
+        code/include/eigen3.2.5/Eigen/src/StlSupport/details.h
+        code/include/eigen3.2.5/Eigen/src/StlSupport/StdDeque.h
+        code/include/eigen3.2.5/Eigen/src/StlSupport/StdList.h
+        code/include/eigen3.2.5/Eigen/src/StlSupport/StdVector.h
+        code/include/eigen3.2.5/Eigen/src/SuperLUSupport/SuperLUSupport.h
+        code/include/eigen3.2.5/Eigen/src/SVD/BDCSVD.h
+        code/include/eigen3.2.5/Eigen/src/SVD/JacobiSVD.h
+        code/include/eigen3.2.5/Eigen/src/SVD/JacobiSVD_LAPACKE.h
+        code/include/eigen3.2.5/Eigen/src/SVD/SVDBase.h
+        code/include/eigen3.2.5/Eigen/src/SVD/UpperBidiagonalization.h
+        code/include/eigen3.2.5/Eigen/src/UmfPackSupport/UmfPackSupport.h
+        code/include/eigen3.2.5/Eigen/Cholesky
+        code/include/eigen3.2.5/Eigen/CholmodSupport
+        code/include/eigen3.2.5/Eigen/CMakeLists.txt
+        code/include/eigen3.2.5/Eigen/Core
+        code/include/eigen3.2.5/Eigen/Dense
+        code/include/eigen3.2.5/Eigen/Eigen
+        code/include/eigen3.2.5/Eigen/Eigenvalues
+        code/include/eigen3.2.5/Eigen/Geometry
+        code/include/eigen3.2.5/Eigen/Householder
+        code/include/eigen3.2.5/Eigen/IterativeLinearSolvers
+        code/include/eigen3.2.5/Eigen/Jacobi
+        code/include/eigen3.2.5/Eigen/LU
+        code/include/eigen3.2.5/Eigen/MetisSupport
+        code/include/eigen3.2.5/Eigen/OrderingMethods
+        code/include/eigen3.2.5/Eigen/PardisoSupport
+        code/include/eigen3.2.5/Eigen/PaStiXSupport
+        code/include/eigen3.2.5/Eigen/QR
+        code/include/eigen3.2.5/Eigen/QtAlignedMalloc
+        code/include/eigen3.2.5/Eigen/Sparse
+        code/include/eigen3.2.5/Eigen/SparseCholesky
+        code/include/eigen3.2.5/Eigen/SparseCore
+        code/include/eigen3.2.5/Eigen/SparseLU
+        code/include/eigen3.2.5/Eigen/SparseQR
+        code/include/eigen3.2.5/Eigen/SPQRSupport
+        code/include/eigen3.2.5/Eigen/StdDeque
+        code/include/eigen3.2.5/Eigen/StdList
+        code/include/eigen3.2.5/Eigen/StdVector
+        code/include/eigen3.2.5/Eigen/SuperLUSupport
+        code/include/eigen3.2.5/Eigen/SVD
+        code/include/eigen3.2.5/Eigen/UmfPackSupport
         code/include/freetype/config/ftconfig.h
         code/include/freetype/config/ftheader.h
         code/include/freetype/config/ftmodule.h
@@ -234,6 +584,55 @@ add_executable(simulator
         code/OptimizationLib/optimizationLib.vcxproj.filters
         code/OptimizationLib/SoftUnilateralConstraint.cpp
         code/OptimizationLib/SoftUnilateralConstraint.h
+        code/out/Assignment2/CollisionPlane.o
+        code/out/Assignment2/main.o
+        code/out/Assignment2/ParticleSystem.o
+        code/out/Assignment2/ParticleSystemLoader.o
+        code/out/Assignment2/PBFApp.o
+        code/out/Assignment2/SpatialMap.o
+        code/out/GUILib/FreeType.o
+        code/out/GUILib/GLApplication.o
+        code/out/GUILib/GLCamera.o
+        code/out/GUILib/GLConsole.o
+        code/out/GUILib/GLContentManager.o
+        code/out/GUILib/GLMesh.o
+        code/out/GUILib/GlobalMouseState.o
+        code/out/GUILib/GLShader.o
+        code/out/GUILib/GLShaderMaterial.o
+        code/out/GUILib/GLTexture.o
+        code/out/GUILib/GLTrackingCamera.o
+        code/out/GUILib/GLUtils.o
+        code/out/GUILib/GLWindow.o
+        code/out/GUILib/GLWindow2D.o
+        code/out/GUILib/GLWindow3D.o
+        code/out/GUILib/GLWindowContainer.o
+        code/out/GUILib/InteractiveWidget.o
+        code/out/GUILib/OBJReader.o
+        code/out/GUILib/RotateWidget.o
+        code/out/GUILib/RotateWidgetV1.o
+        code/out/GUILib/RotateWidgetV2.o
+        code/out/GUILib/TransformWidget.o
+        code/out/GUILib/TranslateWidget.o
+        code/out/MathLib/P3D.o
+        code/out/MathLib/Plane.o
+        code/out/MathLib/Quaternion.o
+        code/out/MathLib/Ray.o
+        code/out/MathLib/Segment.o
+        code/out/MathLib/V3D.o
+        code/out/OptimizationLib/BFGSFunctionMinimizer.o
+        code/out/OptimizationLib/BFGSHessianApproximator.o
+        code/out/OptimizationLib/GradientBasedFunctionMinimizer.o
+        code/out/OptimizationLib/GradientDescentFunctionMinimizer.o
+        code/out/OptimizationLib/GreedyRandomizedMinimizer.o
+        code/out/OptimizationLib/NewtonFunctionMinimizer.o
+        code/out/OptimizationLib/ObjectiveFunction.o
+        code/out/OptimizationLib/SoftUnilateralConstraint.o
+        code/out/Utils/BMPIO.o
+        code/out/Utils/Image.o
+        code/out/Utils/Logger.o
+        code/out/Utils/Timer.o
+        code/out/Utils/Utils.o
+        code/out/cs467
         code/screenShots/t.txt
         code/Utils/BMPIO.cpp
         code/Utils/BMPIO.h
@@ -251,6 +650,7 @@ add_executable(simulator
         code/generate.sh
         code/generate_all.sh
         code/make_makefile.sh
+        code/Makefile
         code/README.txt
         code/SCP.sln
         libs/glfw-3.1.1/debug/glfw3.lib
@@ -263,4 +663,11 @@ add_executable(simulator
         libs/freetype255d.lib
         libs/glew32.dll
         libs/glew32.lib
+        libs/libAntTweakBar.a
+        libs/libAntTweakBar.so
+        libs/libGLEW.a
+        libs/libGLEW.so.2.1.0
+        libs/libglfw3.a
+        CMakeCache.txt
+        CMakeLists.txt
         README.md)
