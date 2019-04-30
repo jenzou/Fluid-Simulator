@@ -34,7 +34,7 @@ echo ".PHONY: directories"
 echo "directories: $dirs\n"
 
 echo "cs467: directories \$(OBJS)"
-echo "\t\$(LD) \$(LD_FLAGS) \$(OBJS) \$(LIBS) -o out/cs467"
+echo "\t\$(LD) \$(LD_FLAGS) \$(OBJS) -L/usr/lib/x86_64-linux-gnu/ -lglut -L/home/cc/cs184/sp19/class/cs184-aci/Downloads/glew-2.1.0/lib -lGLEW -L/home/cc/cs184/sp19/class/cs184-aci/Downloads/glfw-3.3/src -lglfw3 -lGLU -lGL -lX11 -ldl -lXi -lXrandr -lXxf86vm -lXinerama -lXcursor -lrt -lm -pthread -lfreetype -L/home/cc/cs184/sp19/class/cs184-aci/Downloads/AntTweakBar/lib -lAntTweakBar -o out/cs467"
 echo ""
 
 echo "clean:"
