@@ -1,4 +1,5 @@
 #include "CollisionPlane.h"
+#include "Particle.h"
 
 CollisionPlane::CollisionPlane(P3D p, V3D n) {
 	pointOnPlane = p;
@@ -8,7 +9,17 @@ CollisionPlane::CollisionPlane(P3D p, V3D n) {
 // If the given point is colliding with this plane, returns
 // the projection of that point onto this plane.
 // Otherwise, returns the same point.
-P3D CollisionPlane::handleCollision(P3D point)
+P3D CollisionPlane::handleCollision(Particle point)
 {
 	// TODO: implement collision handling with planes.
+	V3D before = -pointOnPlane + point.x_i;
+	V3D after = -pointOnPlane + point.x_star;
+	if (before.dot(normal) * after.dot(normal) <= 0) {
+		// find projection
+		double dist = after.dot(normal);
+		V3D corr = normal*dist;
+		corr = -corr;
+		return point.x_star + corr;
+	}
+	return point.x_star;
 }
