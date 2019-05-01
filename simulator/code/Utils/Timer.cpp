@@ -38,7 +38,7 @@ void Timer::restart(){
 	QueryPerformanceCounter((LARGE_INTEGER *)&this->startTime);
 	SetThreadAffinityMask(GetCurrentThread(), oldmask);
 #else
-	gettimeofday(startTime,0);
+	gettimeofday(&startTime,0);
 
 #endif
 }
@@ -61,7 +61,7 @@ double Timer::timeEllapsed(){
 	struct timeval endTime;
 	struct timeval interval_elapsed;
 	gettimeofday(&endTime,0);
-	timeval_subtract(&interval_elapsed, &endTime, startTime);
+	timeval_subtract(&interval_elapsed, &endTime, &startTime);
 	return (double)interval_elapsed.tv_sec+(double)interval_elapsed.tv_usec/1000000;
 #endif
 }

@@ -18,7 +18,7 @@ private:
 	long long int frequency;
 #else
 	//! start time of reset
-	struct timeval *startTime;
+	struct timeval startTime;
 #endif
 
 

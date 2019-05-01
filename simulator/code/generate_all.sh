@@ -34,8 +34,9 @@ echo ".PHONY: directories"
 echo "directories: $dirs\n"
 
 echo "cs467: directories \$(OBJS)"
-echo "\t\$(LD) \$(LD_FLAGS) \$(OBJS) -L../libs -lglut -L../libs -lGLEW -L../libs -lglfw3 -lGLU -lGL -lX11 -ldl -lXi -lXrandr -lXxf86vm -lXinerama -lXcursor -lrt -lm -pthread -lfreetype -lAntTweakBar -o out/cs467"
+echo "\t\$(LD) \$(LD_FLAGS) \$(OBJS) -L../libs -lglut -L../libs -lGLEW -L../libs -lglfw3 -lGLU -lGL -lX11 -ldl -lXi -lXrandr -lXxf86vm -lXinerama -lXcursor -lrt -lm -pthread -lfreetype -L/home/cc/cs184/sp19/class/cs184-aci/AntTweakBar/lib -lAntTweakBar -o out/cs467"
 echo ""
 
 echo "clean:"
 echo "\trm -r out/*"
+
