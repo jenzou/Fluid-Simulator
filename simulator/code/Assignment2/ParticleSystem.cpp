@@ -121,23 +121,24 @@ void ParticleSystem::integrate_PBF(double delta) {
 
 	// TODO: implement the solver loop.
 	int iter = 0;
-	while (iter < SOLVER_ITERATIONS) {
-        for (auto &p_i : particles) {
-            // Update lambda
-            p_i.lambda_i = () / ();
+	while (iter++ < SOLVER_ITERATIONS) {
+		for (auto &p_i : particles) {
+			// Update lambda
+			p_i.lambda_i = getLambda(i);
+		}
 
-            // Calculate change in position
-            p_i.delta_p = ;
+		for (auto &p_i : particles) {
+			// Calculate change in position
+			p_i.lambda_i = getDeltaP(i);
 
-            for (auto &cp_i : planes) {
-                // Collision detection and response
-                p_i.x_star = cp_i.handleCollision(p_i);
+			// Collision detection and response
+			p_i.x_star = cp_i.handleCollision(p_i);
+		}
 
-                // Update predicted position
-                p_i.x_star += p_i.delta_p;
-            }
-        }
-        iter++;
+		for (auto &p_i : particles) {
+			// Update predicted position
+			p_i.x_star += p_i.delta_p;
+		}
 	}
 
 	for (auto &p : particles) {
@@ -152,6 +153,85 @@ void ParticleSystem::integrate_PBF(double delta) {
 
 		p.x_i = p.x_star;
 	}
+}
+
+double ParticleSystem::getLambda(int i) {
+	double c = getC(i);
+
+	double grad_sum = 0.0;
+	for (int k : particles[i].neighbors) {
+		V3D grad_c = getGradC(i, k);
+		grad_sum += grad_c.length2();
+	}
+
+	return c / (grad_sum + CFM_EPSILON);
+}
+
+double ParticleSystem::getC(int i) {
+	return (getDensity(i) / REST_DENSITY) - 1.0;
+}
+
+double ParticleSystem::getDensity(int i) {
+	double density = 0.0;
+	for (auto &p_j : particles) {
+		V3D j_to_i = particles[i].x_star - particles[j].x_star;
+		density += poly6(j_to_i, KERNEL_H);
+	}
+
+	return density;
+}
+
+V3D getGradC(int i, int k) {
+	V3D grad_c = V3D();
+
+	if (i == k) {
+		for (int j : particles[i].neighbors) {
+			V3D j_to_i = particles[i].x_star - particles[j].x_star;
+			grad_c += spiky(j_to_i, KERNEL_H, true);
+		}
+	} else {
+		V3D k_to_i = particles[i].x_star - particles[k].x_star;
+		grad_c = - spiky(k_to_i, KERNEL_H, false);
+	}
+
+	return grad_c / REST_DENSITY;
+}
+
+V3D getDeltaP(int i) {
+	V3D delta_p = V3D();
+
+	for (int j : particles[i].neighbors) {
+		double coeff = particles[i].lambda_i + particles[j].lambda_i + getCorr(i, j);
+		V3D j_to_i = particles[i].x_star - particles[j].x_star;
+		double term = spiky(j_to_i, KERNEL_H, true);
+
+		delta_p += coeff * term;
+	}
+
+	return delta_p / REST_DENSITY;
+}
+
+double poly6(V3D r, double h) {
+	if (r.length() > h) {
+		return 0.0;
+	}
+
+	double coeff = 315 / 64 / PI / pow(h, 9);
+	double term = pow(pow(h, 2) - r.length2(), 3);
+
+	return coeff * term;
+}
+
+V3D spiky(V3D r, double h, bool wrt_first) {
+	if (r.length() > h) {
+		return 0.0;
+	}
+
+	double coeff = -45 / PI / pow(h, 6);
+	double term = pow(h - r.length(), 2);
+	V3D dir = wrt_first ? r.unit() : - r.unit();
+
+	return coeff * term * dir;
 }
 
 // Code for drawing the particle system is below here.

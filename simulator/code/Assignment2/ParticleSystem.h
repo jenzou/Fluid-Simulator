@@ -32,6 +32,17 @@ private:
 	int count;
 	
 	unsigned int boxList;
+
+	double getLambda(int i);
+	double getC(int i);
+	double getDensity(int i);
+	V3D getGradC(int i, int k);
+	V3D getDeltaP(int i);
+	double getCorr(int i, int j);
+
+	double poly6(V3D r, double h);
+	V3D spiky(V3D r, double h, bool wrt_first);
+
 	
 public:
 	ParticleSystem(vector<ParticleInit>& particles);
