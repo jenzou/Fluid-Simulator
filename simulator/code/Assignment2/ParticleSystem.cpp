@@ -211,6 +211,16 @@ V3D getDeltaP(int i) {
 	return delta_p / REST_DENSITY;
 }
 
+double getCorr(int i, int j) {
+	V3D j_to_i = particles[i].x_star - particles[j].x_star;
+	double num = poly6(j_to_i, KERNEL_H);
+
+	V3D delta_q = V3D(TENSILE_DELTA_Q, 0.0, 0.0);
+	double denom = poly6(delta_q, KERNEL_H);
+
+	return - TENSILE_K * pow(num/denom, TENSILE_N);
+}
+
 double poly6(V3D r, double h) {
 	if (r.length() > h) {
 		return 0.0;
