@@ -3,7 +3,7 @@
 #include "Constants.h"
 
 MassSpringApp::MassSpringApp() {
-	setWindowTitle("Assignment 2: Position Based Fluids");
+	setWindowTitle("Position-Based Fluid Simulator");
 	TwAddSeparator(mainMenuBar, "sep2", "");
 
 	TwAddVarRW(mainMenuBar, "Draw Particles", TW_TYPE_BOOLCPP, &ParticleSystem::drawParticles, "");
@@ -13,7 +13,7 @@ MassSpringApp::MassSpringApp() {
 	showDesignEnvironmentBox = true;
 	showReflections = false;
 
-	particleSystem = ParticleSystemLoader::loadFromOBJ("../meshes/bunny300.obj");
+	particleSystem = ParticleSystemLoader::loadFromOBJ("../meshes/bunny670.obj");
 
 	pickedParticle = -1;
 }

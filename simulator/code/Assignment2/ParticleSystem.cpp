@@ -120,15 +120,36 @@ void ParticleSystem::integrate_PBF(double delta) {
 	}
 
 	// TODO: implement the solver loop.
-	for (auto &p_i : particles) {
-		for (auto &cp_i : planes) {
-			p_i.x_star = cp_i.handleCollision(p_i);
-		}
+	int iter = 0;
+	while (iter < SOLVER_ITERATIONS) {
+        for (auto &p_i : particles) {
+            // Update lambda
+            p_i.lambda_i = () / ();
+
+            // Calculate change in position
+            p_i.delta_p = ;
+
+            for (auto &cp_i : planes) {
+                // Collision detection and response
+                p_i.x_star = cp_i.handleCollision(p_i);
+
+                // Update predicted position
+                p_i.x_star += p_i.delta_p;
+            }
+        }
+        iter++;
 	}
 
 	for (auto &p : particles) {
 		// TODO: edit this loop to apply vorticity and viscosity.
 		p.v_i = (p.x_star - p.x_i) / delta;
+
+		// Apply vorticity
+
+
+		// Apply viscosity
+
+
 		p.x_i = p.x_star;
 	}
 }
