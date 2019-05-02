@@ -168,7 +168,9 @@ double ParticleSystem::getLambda(int i) {
 }
 
 double ParticleSystem::getC(int i) {
-	return (getDensity(i) / REST_DENSITY) - 1.0;
+	particles[i].density = getDensity(i);
+	
+	return (particles[i].density / REST_DENSITY) - 1.0;
 }
 
 double ParticleSystem::getDensity(int i) {
@@ -181,7 +183,7 @@ double ParticleSystem::getDensity(int i) {
 	return density;
 }
 
-V3D getGradC(int i, int k) {
+V3D ParticleSystem::getGradC(int i, int k) {
 	V3D grad_c = V3D();
 
 	if (i == k) {
@@ -197,7 +199,7 @@ V3D getGradC(int i, int k) {
 	return grad_c / REST_DENSITY;
 }
 
-V3D getDeltaP(int i) {
+V3D ParticleSystem::getDeltaP(int i) {
 	V3D delta_p = V3D();
 
 	for (int j : particles[i].neighbors) {
@@ -211,7 +213,7 @@ V3D getDeltaP(int i) {
 	return delta_p / REST_DENSITY;
 }
 
-double getCorr(int i, int j) {
+double ParticleSystem::getCorr(int i, int j) {
 	V3D j_to_i = particles[i].x_star - particles[j].x_star;
 	double num = poly6(j_to_i, KERNEL_H);
 
@@ -221,7 +223,7 @@ double getCorr(int i, int j) {
 	return - TENSILE_K * pow(num/denom, TENSILE_N);
 }
 
-double poly6(V3D r, double h) {
+double ParticleSystem::poly6(V3D r, double h) {
 	if (r.length() > h) {
 		return 0.0;
 	}
@@ -232,7 +234,7 @@ double poly6(V3D r, double h) {
 	return coeff * term;
 }
 
-V3D spiky(V3D r, double h, bool wrt_first) {
+V3D ParticleSystem::spiky(V3D r, double h, bool wrt_first) {
 	if (r.length() > h) {
 		return 0.0;
 	}
