@@ -122,17 +122,17 @@ void ParticleSystem::integrate_PBF(double delta) {
 	// TODO: implement the solver loop.
 	int iter = 0;
 	while (iter++ < SOLVER_ITERATIONS) {
-		for (auto &p_i : particles) {
+		for (int i = 0; i < particles.size(); i++) {
 			// Update lambda
-			p_i.lambda_i = getLambda(i);
+			particles[i].lambda_i = getLambda(i);
 		}
 
-		for (auto &p_i : particles) {
+		for (int i = 0; i < particles.size(); i++) {
 			// Calculate change in position
-			p_i.lambda_i = getDeltaP(i);
+			particles[i].lambda_i = getDeltaP(i);
 
 			// Collision detection and response
-			p_i.x_star = cp_i.handleCollision(p_i);
+			particles[i].x_star = cp_i.handleCollision(p_i);
 		}
 
 		for (auto &p_i : particles) {
@@ -205,9 +205,9 @@ V3D ParticleSystem::getDeltaP(int i) {
 	for (int j : particles[i].neighbors) {
 		double coeff = particles[i].lambda_i + particles[j].lambda_i + getCorr(i, j);
 		V3D j_to_i = particles[i].x_star - particles[j].x_star;
-		double term = spiky(j_to_i, KERNEL_H, true);
+		V3D term = spiky(j_to_i, KERNEL_H, true);
 
-		delta_p += coeff * term;
+		delta_p += term * coeff;
 	}
 
 	return delta_p / REST_DENSITY;
@@ -236,14 +236,14 @@ double ParticleSystem::poly6(V3D r, double h) {
 
 V3D ParticleSystem::spiky(V3D r, double h, bool wrt_first) {
 	if (r.length() > h) {
-		return 0.0;
+		return V3D();
 	}
 
 	double coeff = -45 / PI / pow(h, 6);
 	double term = pow(h - r.length(), 2);
 	V3D dir = wrt_first ? r.unit() : - r.unit();
 
-	return coeff * term * dir;
+	return dir * (coeff * term);
 }
 
 // Code for drawing the particle system is below here.
