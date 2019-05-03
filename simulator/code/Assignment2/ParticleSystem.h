@@ -42,6 +42,7 @@ public:
 	void applyForces(double delta);
 	void integrate_PBF(double delta);
 
+    double poly6(double r);
     double density_constraint(Particle p_i);
     V3D gradient_of_constraint(Particle p_i, Particle p_k);
 

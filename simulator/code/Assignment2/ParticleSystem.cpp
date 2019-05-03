@@ -137,7 +137,9 @@ void ParticleSystem::integrate_PBF(double delta) {
             V3D sum = V3D();
             for (int n : p_i.neighbors) {
                 Particle neighbor = particles[n];
-                sum += gradient_of_constraint(p_i, neighbor) * (p_i.lambda_i + neighbor.lambda_i);
+                double density_term = poly6((p_i.x_i - neighbor.x_i).length()) / poly6(TENSILE_DELTA_Q);
+                double s_corr = -TENSILE_K * pow(density_term, TENSILE_N);
+                sum += gradient_of_constraint(p_i, neighbor) * (p_i.lambda_i + neighbor.lambda_i + s_corr);
             }
             p_i.delta_p = sum / REST_DENSITY;
 
@@ -153,11 +155,8 @@ void ParticleSystem::integrate_PBF(double delta) {
 	}
 
 	for (auto &p : particles) {
-		// TODO: edit this loop to apply vorticity and viscosity.
+		// TODO: edit this loop to apply viscosity.
 		p.v_i = (p.x_star - p.x_i) / delta;
-
-		// Apply vorticity
-
 
 		// Apply viscosity
 
@@ -166,12 +165,16 @@ void ParticleSystem::integrate_PBF(double delta) {
 	}
 }
 
+double ParticleSystem::poly6(double r) {
+    return POLY_6 * pow((pow(KERNEL_H, 2) - pow(r, 2)), 3);
+}
+
 double ParticleSystem::density_constraint(Particle p_i) {
     for (int n : p_i.neighbors) {
         Particle neighbor = particles[n];
         double distance = (p_i.x_i - neighbor.x_i).length();
         if (distance >= 0 && distance <= KERNEL_H) {
-            p_i.density += POLY_6 * pow((pow(KERNEL_H, 2) - pow(distance, 2)), 3);
+            p_i.density += poly6(distance);
         }
     }
     return (p_i.density / REST_DENSITY) - 1;
