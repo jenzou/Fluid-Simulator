@@ -150,6 +150,7 @@ void ParticleSystem::integrate_PBF(double delta) {
 		}
 	}
 
+	int particle_index = 0;
 	for (auto &p : particles) {
 		// TODO: edit this loop to apply vorticity and viscosity.
 		p.v_i = (p.x_star - p.x_i) / delta;
@@ -158,9 +159,11 @@ void ParticleSystem::integrate_PBF(double delta) {
 
 
 		// Apply viscosity
-
+		p.v_i += getXSPH(particle_index);
 
 		p.x_i = p.x_star;
+
+		particle_index++;
 	}
 }
 
@@ -269,7 +272,7 @@ V3D ParticleSystem::getVorticity(int i) {
 	return vorticity;
 }
 
-void ParticleSystem::applyXSPH(int i) {
+V3D ParticleSystem::getXSPH(int i) {
 	V3D delta_v = V3D();
 
 	for (int j : particles[i].neighbors) {
@@ -278,7 +281,7 @@ void ParticleSystem::applyXSPH(int i) {
 		delta_v += rel_vel * poly6(j_to_i, KERNEL_H);
 	}
 
-	particles[i].v_i += delta_v * VISCOSITY_C;
+	return delta_v * VISCOSITY_C;
 }
 
 // Code for drawing the particle system is below here.

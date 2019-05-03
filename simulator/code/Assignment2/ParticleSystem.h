@@ -44,7 +44,7 @@ private:
 	V3D spiky(V3D r, double h, bool wrt_first);
 
 	V3D getVorticity(int i);
-	void applyXSPH(int i);
+	V3D getXSPH(int i);
 	
 public:
 	ParticleSystem(vector<ParticleInit>& particles);
