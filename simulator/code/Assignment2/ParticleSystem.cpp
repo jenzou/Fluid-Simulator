@@ -166,7 +166,7 @@ void ParticleSystem::integrate_PBF(double delta) {
 }
 
 double ParticleSystem::poly6(double r) {
-    return POLY_6 * pow((pow(KERNEL_H, 2) - pow(r, 2)), 3);
+    return POLY_6 * pow(pow(KERNEL_H, 2) - pow(r, 2), 3);
 }
 
 double ParticleSystem::density_constraint(Particle p_i) {
