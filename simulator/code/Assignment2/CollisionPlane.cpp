@@ -16,7 +16,7 @@ P3D CollisionPlane::handleCollision(Particle point)
 	V3D after = -pointOnPlane + point.x_star;
 	if (before.dot(normal) * after.dot(normal) <= 0) {
 		// Point collides with plane - return projection
-		double dist = after.dot(normal);
+		double dist = after.dot(normal);// - .001;
 		V3D corr = -(normal * dist);
 		return point.x_star + corr;
 	}

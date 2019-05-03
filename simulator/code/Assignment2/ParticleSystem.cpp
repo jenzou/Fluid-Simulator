@@ -139,12 +139,11 @@ void ParticleSystem::integrate_PBF(double delta) {
                 Particle neighbor = particles[p_i.neighbors[i]];
                 sum += gradient_of_constraint(p_i, neighbor) * (p_i.lambda_i + neighbor.lambda_i);
             }
-            p_i.delta_p =  sum * (1.f / REST_DENSITY);
+            p_i.delta_p = sum * (1.f / REST_DENSITY);
 
             // Collision detection and response
             for (auto &cp_i : planes) {
                 p_i.x_star = cp_i.handleCollision(p_i);
-
             }
 
             // Update predicted position
@@ -172,19 +171,21 @@ double ParticleSystem::density_constraint(Particle p_i) {
         Particle neighbor = particles[p_i.neighbors[i]];
         double distance = (p_i.x_i - neighbor.x_i).length();
         if (distance >= 0 && distance <= KERNEL_H) {
-            p_i.density += (POLY_6) * pow((pow(KERNEL_H, 2) - pow(distance, 2)), 3);
+            p_i.density += POLY_6 * pow((pow(KERNEL_H, 2) - pow(distance, 2)), 3);
         }
     }
     return (p_i.density / REST_DENSITY) - 1;
 }
 
 V3D ParticleSystem::gradient_of_constraint(Particle p_i, Particle p_k) {
-    if (&p_i == &p_k) {
+    if (p_i.x_i == p_k.x_i) {
         // Return sum of gradients of constraint of all neighbors
         V3D sum = V3D();
         for (int i = 0; i < p_i.neighbors.size(); ++i) {
             Particle neighbor = particles[p_i.neighbors[i]];
-            sum += -(gradient_of_constraint(p_i, neighbor));
+            if (p_i.x_i != neighbor.x_i) {
+                sum += -(gradient_of_constraint(p_i, neighbor));
+            }
         }
         return sum;
     } else {
