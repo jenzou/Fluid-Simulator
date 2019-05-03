@@ -129,15 +129,24 @@ void ParticleSystem::integrate_PBF(double delta) {
 
 		for (int i = 0; i < particles.size(); i++) {
 			// Calculate change in position
-			particles[i].lambda_i = getDeltaP(i);
+			particles[i].delta_p = getDeltaP(i);
 
-			// Collision detection and response
-			particles[i].x_star = cp_i.handleCollision(p_i);
+			/*for (CollisionPlane cp_i : planes) {
+				// Collision detection and response
+				particles[i].x_star = cp_i.handleCollision(particles[i]);
+			}*/
 		}
 
 		for (auto &p_i : particles) {
 			// Update predicted position
 			p_i.x_star += p_i.delta_p;
+		}
+
+		for (int i = 0; i < particles.size(); i++) {
+			for (CollisionPlane cp_i : planes) {
+				// Collision detection and response
+				particles[i].x_star = cp_i.handleCollision(particles[i]);
+			}
 		}
 	}
 
@@ -175,7 +184,7 @@ double ParticleSystem::getC(int i) {
 
 double ParticleSystem::getDensity(int i) {
 	double density = 0.0;
-	for (auto &p_j : particles) {
+	for (int j = 0; j < particles.size(); j++) {
 		V3D j_to_i = particles[i].x_star - particles[j].x_star;
 		density += poly6(j_to_i, KERNEL_H);
 	}
