@@ -177,7 +177,19 @@ void MassSpringApp::drawAuxiliarySceneInfo() {
 
 // Restart the application.
 void MassSpringApp::restart() {
+	setWindowTitle("Position-Based Fluid Simulator");
+	TwAddSeparator(mainMenuBar, "sep2", "");
 
+	TwAddVarRW(mainMenuBar, "Draw Particles", TW_TYPE_BOOLCPP, &ParticleSystem::drawParticles, "");
+	TwAddVarRW(mainMenuBar, "Enable Gravity", TW_TYPE_BOOLCPP, &ParticleSystem::enableGravity, "");
+
+	showGroundPlane = false;
+	showDesignEnvironmentBox = true;
+	showReflections = false;
+
+	particleSystem = ParticleSystemLoader::loadFromOBJ("../meshes/bunny670.obj");
+
+	pickedParticle = -1;
 }
 
 bool MassSpringApp::processCommandLine(const std::string& cmdLine) {
