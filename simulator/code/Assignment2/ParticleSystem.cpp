@@ -155,8 +155,17 @@ void ParticleSystem::integrate_PBF(double delta) {
 	}
 
 	for (auto &p : particles) {
-		// TODO: edit this loop to apply viscosity.
+		// TODO: edit this loop to apply vorticity and viscosity.
 		p.v_i = (p.x_star - p.x_i) / delta;
+
+		// Apply vorticity
+		for (int n : p.neighbors) {
+		    Particle neighbor = particles[n];
+		    V3D vij = neighbor.v_i - p.v_i;
+            p.vorticity_W += vij.cross(gradient_of_spiky(p.x_i - neighbor.x_i, false));
+		}
+        p.vorticity_N = .unit();
+		p.v_i += ((p.vorticity_N.cross(p.vorticity_W)) *  VORTICITY_EPSILON);
 
 		// Apply viscosity
 
@@ -167,6 +176,15 @@ void ParticleSystem::integrate_PBF(double delta) {
 
 double ParticleSystem::poly6(double r) {
     return POLY_6 * pow(pow(KERNEL_H, 2) - pow(r, 2), 3);
+}
+
+V3D ParticleSystem::gradient_of_spiky(V3D r, bool wrt_i) {
+    double distance = r.length();
+    if (distance >= 0 && distance <= KERNEL_H) {
+        V3D direction = wrt_i ? r.unit() : -r.unit();
+        return direction * -SPIKY_GRADIENT * (pow(KERNEL_H - distance, 2));
+    }
+    return V3D();
 }
 
 double ParticleSystem::density_constraint(Particle p_i) {
@@ -186,19 +204,13 @@ V3D ParticleSystem::gradient_of_constraint(Particle p_i, Particle p_k) {
         V3D sum = V3D();
         for (int n : p_i.neighbors) {
             Particle neighbor = particles[n];
-            if (p_i.x_i != neighbor.x_i) {
-                sum += -gradient_of_constraint(p_i, neighbor);
-            }
+            V3D r = p_i.x_i - neighbor.x_i;
+            sum += gradient_of_spiky(r, true);
         }
-        return sum;
+        return sum / REST_DENSITY;
     } else {
         V3D r = p_i.x_i - p_k.x_i;
-        double distance = r.length();
-        if (distance >= 0 && distance <= KERNEL_H) {
-            double scalar = (1.f / REST_DENSITY) * -SPIKY_GRADIENT * (pow(KERNEL_H - distance, 2));
-            return r.unit() * scalar;
-        }
-        return V3D();
+        return -gradient_of_spiky(r, false) / REST_DENSITY;
     }
 }
 

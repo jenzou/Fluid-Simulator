@@ -43,6 +43,7 @@ public:
 	void integrate_PBF(double delta);
 
     double poly6(double r);
+    V3D gradient_of_spiky(V3D r, bool wrt_i);
     double density_constraint(Particle p_i);
     V3D gradient_of_constraint(Particle p_i, Particle p_k);
 
