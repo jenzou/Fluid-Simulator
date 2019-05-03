@@ -5,6 +5,10 @@
 
 #define KERNEL_H 0.25
 #define REST_DENSITY 450000
+
+#define POLY_6 (315 / (64 * PI * pow(KERNEL_H, 9)))
+#define SPIKY_GRADIENT (-45 / (PI * pow(KERNEL_H, 6)))
+
 #define CFM_EPSILON 0.1
 #define DRAG_COEFF 1
 

@@ -42,7 +42,9 @@ public:
 	void applyForces(double delta);
 	void integrate_PBF(double delta);
 
-	// Functions for display and interactivity
+    double density_constraint(Particle p_i);
+
+    // Functions for display and interactivity
 	void drawParticleSystem();
 	void setPosition(int i, P3D x);
 	void setVelocity(int i, V3D v);

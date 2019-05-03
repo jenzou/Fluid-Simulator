@@ -124,8 +124,10 @@ void ParticleSystem::integrate_PBF(double delta) {
 	while (iter < SOLVER_ITERATIONS) {
         for (auto &p_i : particles) {
             // Update lambda
-            p_i.lambda_i = () / ();
+            p_i.lambda_i = -density_constraint(p_i) / ();
+        }
 
+        for (auto &p_i : particles) {
             // Calculate change in position
             p_i.delta_p = ;
 
@@ -152,6 +154,21 @@ void ParticleSystem::integrate_PBF(double delta) {
 
 		p.x_i = p.x_star;
 	}
+}
+
+double ParticleSystem::density_constraint(Particle p_i) {
+    for (int i = 0; i < p_i.neighbors.size(); ++i) {
+        Particle neighbor = particles[p_i.neighbors[i]];
+        double distance = (p_i.x_i - neighbor.x_i).length();
+        if (distance <= KERNEL_H) {
+            p_i.density += (POLY_6) * pow((pow(KERNEL_H, 2) - pow(distance, 2)), 3);
+        }
+    }
+    return (p_i.density / REST_DENSITY) - 1;
+}
+
+double ParticleSystem::gradient_of_constraint(Particle p_i, Particle p_k) {
+
 }
 
 // Code for drawing the particle system is below here.
