@@ -134,7 +134,14 @@ void ParticleSystem::integrate_PBF(double delta) {
 
         for (auto &p_i : particles) {
             // Calculate change in position
-            p_i.delta_p = ;
+            V3D sum = V3D();
+
+            for (int i = 0; i < p_i.neighbors.size(); ++i) {
+                Particle neighbor = particles[p_i.neighbors[i]];
+                sum += gradient_of_constraint(p_i, neighbor) * (p_i.lambda_i + neighbor.lambda_i);
+            }
+
+            p_i.delta_p =  sum * (1.f / REST_DENSITY);
 
             for (auto &cp_i : planes) {
                 // Collision detection and response
