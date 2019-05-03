@@ -30,6 +30,8 @@ ParticleSystem::ParticleSystem(vector<ParticleInit>& initialParticles)
 		p.v_i = ip.velocity;
 		p.x_star = p.x_i;
 		p.neighbors.clear();
+		p.vorticity_W = V3D();
+		p.vorticity_N = V3D();
 		particles.push_back(p);
 	}
 
@@ -96,7 +98,7 @@ void ParticleSystem::applyForces(double delta) {
 	if (enableGravity) {
 		// Assume all particles have unit mass to simplify calculations.
 		for (auto &p : particles) {
-			p.v_i += (GRAVITY * delta);
+			p.v_i += ((GRAVITY) * delta);
 		}
 	}
 }
@@ -141,7 +143,7 @@ void ParticleSystem::integrate_PBF(double delta) {
 			// Update predicted position
 			p_i.x_star += p_i.delta_p;
 		}
-
+		
 		for (int i = 0; i < particles.size(); i++) {
 			for (CollisionPlane cp_i : planes) {
 				// Collision detection and response
@@ -156,7 +158,9 @@ void ParticleSystem::integrate_PBF(double delta) {
 		p.v_i = (p.x_star - p.x_i) / delta;
 
 		// Apply vorticity
-
+		p.vorticity_W = getVorticityW(particle_index);
+		p.vorticity_N = getVorticityN(particle_index);
+		p.vorticity_W = p.vorticity_N.cross(p.vorticity_W) * VORTICITY_EPSILON;
 
 		// Apply viscosity
 		p.v_i += getXSPH(particle_index);
@@ -258,7 +262,7 @@ V3D ParticleSystem::spiky(V3D r, double h, bool wrt_first) {
 	return dir * (coeff * term);
 }
 
-V3D ParticleSystem::getVorticity(int i) {
+V3D ParticleSystem::getVorticityW(int i) {
 	V3D vorticity = V3D();
 	for (int j : particles[i].neighbors) {
 		V3D rel_vel = particles[j].v_i - particles[i].v_i;
@@ -270,6 +274,23 @@ V3D ParticleSystem::getVorticity(int i) {
 	}
 
 	return vorticity;
+}
+
+V3D ParticleSystem::getVorticityN(int i) {
+	return getGradW(i).unit();
+}
+
+V3D ParticleSystem::getGradW(int i) {
+	V3D grad_w = V3D();
+	for (int j : particles[i].neighbors) {
+		double diff_w = particles[j].vorticity_W.length() - particles[i].vorticity_W.length();
+		V3D j_to_i = particles[i].x_i - particles[j].x_i;
+		double diff_p = j_to_i.length();
+
+		grad_w += (spiky(j_to_i, KERNEL_H, false) * diff_w / diff_p);
+	}
+
+	return grad_w;
 }
 
 V3D ParticleSystem::getXSPH(int i) {

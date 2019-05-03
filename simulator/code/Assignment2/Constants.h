@@ -4,7 +4,7 @@
 #define SOLVER_ITERATIONS 10 //5
 
 #define KERNEL_H 0.25
-#define REST_DENSITY 450000
+#define REST_DENSITY 1000000 //450000
 #define CFM_EPSILON 0.1
 #define DRAG_COEFF 1
 

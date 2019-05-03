@@ -43,7 +43,9 @@ private:
 	double poly6(V3D r, double h);
 	V3D spiky(V3D r, double h, bool wrt_first);
 
-	V3D getVorticity(int i);
+	V3D getVorticityW(int i);
+	V3D getVorticityN(int i);
+	V3D getGradW(int i);
 	V3D getXSPH(int i);
 	
 public:
