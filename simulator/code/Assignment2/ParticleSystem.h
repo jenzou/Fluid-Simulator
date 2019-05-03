@@ -43,8 +43,9 @@ public:
 	void integrate_PBF(double delta);
 
     double density_constraint(Particle p_i);
+    V3D gradient_of_constraint(Particle p_i, Particle p_k);
 
-    // Functions for display and interactivity
+        // Functions for display and interactivity
 	void drawParticleSystem();
 	void setPosition(int i, P3D x);
 	void setVelocity(int i, V3D v);
