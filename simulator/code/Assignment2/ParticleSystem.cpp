@@ -135,21 +135,20 @@ void ParticleSystem::integrate_PBF(double delta) {
         for (auto &p_i : particles) {
             // Calculate change in position
             V3D sum = V3D();
-
             for (int i = 0; i < p_i.neighbors.size(); ++i) {
                 Particle neighbor = particles[p_i.neighbors[i]];
                 sum += gradient_of_constraint(p_i, neighbor) * (p_i.lambda_i + neighbor.lambda_i);
             }
-
             p_i.delta_p =  sum * (1.f / REST_DENSITY);
 
+            // Collision detection and response
             for (auto &cp_i : planes) {
-                // Collision detection and response
                 p_i.x_star = cp_i.handleCollision(p_i);
 
-                // Update predicted position
-                p_i.x_star += p_i.delta_p;
             }
+
+            // Update predicted position
+            p_i.x_star += p_i.delta_p;
         }
         iter++;
 	}
