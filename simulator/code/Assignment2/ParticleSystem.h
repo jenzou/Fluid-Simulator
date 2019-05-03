@@ -43,6 +43,8 @@ private:
 	double poly6(V3D r, double h);
 	V3D spiky(V3D r, double h, bool wrt_first);
 
+	V3D getVorticity(int i);
+	void applyXSPH(int i);
 	
 public:
 	ParticleSystem(vector<ParticleInit>& particles);

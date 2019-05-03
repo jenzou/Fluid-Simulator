@@ -255,6 +255,32 @@ V3D ParticleSystem::spiky(V3D r, double h, bool wrt_first) {
 	return dir * (coeff * term);
 }
 
+V3D ParticleSystem::getVorticity(int i) {
+	V3D vorticity = V3D();
+	for (int j : particles[i].neighbors) {
+		V3D rel_vel = particles[j].v_i - particles[i].v_i;
+
+		V3D j_to_i = particles[i].x_i - particles[j].x_i;
+		V3D smoothing = spiky(j_to_i, KERNEL_H, false);
+
+		vorticity += rel_vel.cross(smoothing);
+	}
+
+	return vorticity;
+}
+
+void ParticleSystem::applyXSPH(int i) {
+	V3D delta_v = V3D();
+
+	for (int j : particles[i].neighbors) {
+		V3D rel_vel = particles[j].v_i - particles[i].v_i;
+		V3D j_to_i = particles[i].x_i - particles[j].x_i;
+		delta_v += rel_vel * poly6(j_to_i, KERNEL_H);
+	}
+
+	particles[i].v_i += delta_v * VISCOSITY_C;
+}
+
 // Code for drawing the particle system is below here.
 
 GLuint makeBoxDisplayList() {
