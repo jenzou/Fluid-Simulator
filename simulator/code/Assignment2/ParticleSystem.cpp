@@ -184,7 +184,7 @@ V3D ParticleSystem::gradient_of_constraint(Particle p_i, Particle p_k) {
         for (int n : p_i.neighbors) {
             Particle neighbor = particles[n];
             if (p_i.x_i != neighbor.x_i) {
-                sum += -(gradient_of_constraint(p_i, neighbor));
+                sum += -gradient_of_constraint(p_i, neighbor);
             }
         }
         return sum;
@@ -192,7 +192,7 @@ V3D ParticleSystem::gradient_of_constraint(Particle p_i, Particle p_k) {
         V3D r = p_i.x_i - p_k.x_i;
         double distance = r.length();
         if (distance >= 0 && distance <= KERNEL_H) {
-            double scalar = (1.f / REST_DENSITY) * -SPIKY_GRADIENT * (pow((KERNEL_H - distance), 2));
+            double scalar = (1.f / REST_DENSITY) * -SPIKY_GRADIENT * (pow(KERNEL_H - distance, 2));
             return r.unit() * scalar;
         }
         return V3D();
