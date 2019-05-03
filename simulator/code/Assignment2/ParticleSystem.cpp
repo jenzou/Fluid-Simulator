@@ -127,9 +127,9 @@ void ParticleSystem::integrate_PBF(double delta) {
             double gradient_sum = 0;
             for (int i = 0; i < p_i.neighbors.size(); ++i) {
                 Particle neighbor = particles[p_i.neighbors[i]];
-                gradient_sum += gradient_of_constraint(p_i).length2();
+                gradient_sum += gradient_of_constraint(p_i, neighbor).length2();
             }
-            p_i.lambda_i = -density_constraint(p_i) / gradient_sum;
+            p_i.lambda_i = -density_constraint(p_i) / (gradient_sum + CFM_EPSILON);
         }
 
         for (auto &p_i : particles) {
@@ -173,6 +173,10 @@ double ParticleSystem::density_constraint(Particle p_i) {
 }
 
 V3D ParticleSystem::gradient_of_constraint(Particle p_i, Particle p_k) {
+
+
+
+
     return
 }
 
