@@ -125,8 +125,8 @@ void ParticleSystem::integrate_PBF(double delta) {
         for (auto &p_i : particles) {
             // Update lambda
             double gradient_sum = 0;
-            for (int i = 0; i < p_i.neighbors.size(); ++i) {
-                Particle neighbor = particles[p_i.neighbors[i]];
+            for (int n : p_i.neighbors) {
+                Particle neighbor = particles[n];
                 gradient_sum += gradient_of_constraint(p_i, neighbor).length2();
             }
             p_i.lambda_i = -density_constraint(p_i) / (gradient_sum + CFM_EPSILON);
@@ -135,11 +135,11 @@ void ParticleSystem::integrate_PBF(double delta) {
         for (auto &p_i : particles) {
             // Calculate change in position
             V3D sum = V3D();
-            for (int i = 0; i < p_i.neighbors.size(); ++i) {
-                Particle neighbor = particles[p_i.neighbors[i]];
+            for (int n : p_i.neighbors) {
+                Particle neighbor = particles[n];
                 sum += gradient_of_constraint(p_i, neighbor) * (p_i.lambda_i + neighbor.lambda_i);
             }
-            p_i.delta_p = sum * (1.f / REST_DENSITY);
+            p_i.delta_p = sum / REST_DENSITY;
 
             // Collision detection and response
             for (auto &cp_i : planes) {
@@ -167,8 +167,8 @@ void ParticleSystem::integrate_PBF(double delta) {
 }
 
 double ParticleSystem::density_constraint(Particle p_i) {
-    for (int i = 0; i < p_i.neighbors.size(); ++i) {
-        Particle neighbor = particles[p_i.neighbors[i]];
+    for (int n : p_i.neighbors) {
+        Particle neighbor = particles[n];
         double distance = (p_i.x_i - neighbor.x_i).length();
         if (distance >= 0 && distance <= KERNEL_H) {
             p_i.density += POLY_6 * pow((pow(KERNEL_H, 2) - pow(distance, 2)), 3);
@@ -181,8 +181,8 @@ V3D ParticleSystem::gradient_of_constraint(Particle p_i, Particle p_k) {
     if (p_i.x_i == p_k.x_i) {
         // Return sum of gradients of constraint of all neighbors
         V3D sum = V3D();
-        for (int i = 0; i < p_i.neighbors.size(); ++i) {
-            Particle neighbor = particles[p_i.neighbors[i]];
+        for (int n : p_i.neighbors) {
+            Particle neighbor = particles[n];
             if (p_i.x_i != neighbor.x_i) {
                 sum += -(gradient_of_constraint(p_i, neighbor));
             }
