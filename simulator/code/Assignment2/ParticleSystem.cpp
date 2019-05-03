@@ -330,7 +330,7 @@ void ParticleSystem::drawParticleSystem() {
 		glVertexPointer(3, GL_DOUBLE, 0, &(positionArray.front()));
 
 		glColor4d(0.2, 0.2, 0.8, 1);
-		glPointSize(32);
+		glPointSize(11);
 		glDrawElements(GL_POINTS, numParticles, GL_UNSIGNED_INT, &(pointsIndexArray.front()));
 
 		glDisableClientState(GL_VERTEX_ARRAY);
