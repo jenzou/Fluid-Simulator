@@ -165,7 +165,7 @@ double ParticleSystem::density_constraint(Particle p_i) {
     for (int i = 0; i < p_i.neighbors.size(); ++i) {
         Particle neighbor = particles[p_i.neighbors[i]];
         double distance = (p_i.x_i - neighbor.x_i).length();
-        if (distance <= KERNEL_H) {
+        if (distance >= 0 && distance <= KERNEL_H) {
             p_i.density += (POLY_6) * pow((pow(KERNEL_H, 2) - pow(distance, 2)), 3);
         }
     }
@@ -173,11 +173,23 @@ double ParticleSystem::density_constraint(Particle p_i) {
 }
 
 V3D ParticleSystem::gradient_of_constraint(Particle p_i, Particle p_k) {
-
-
-
-
-    return
+    if (&p_i == &p_k) {
+        // Return sum of gradients of constraint of all neighbors
+        V3D sum = V3D();
+        for (int i = 0; i < p_i.neighbors.size(); ++i) {
+            Particle neighbor = particles[p_i.neighbors[i]];
+            sum += -(gradient_of_constraint(p_i, neighbor));
+        }
+        return sum;
+    } else {
+        V3D r = p_i.x_i - p_k.x_i;
+        double distance = r.length();
+        if (distance >= 0 && distance <= KERNEL_H) {
+            double scalar = (1.f / REST_DENSITY) * -SPIKY_GRADIENT * (pow((KERNEL_H - distance), 2));
+            return r.unit() * scalar;
+        }
+        return V3D();
+    }
 }
 
 // Code for drawing the particle system is below here.
