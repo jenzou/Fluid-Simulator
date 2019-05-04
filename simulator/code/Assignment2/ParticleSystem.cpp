@@ -161,11 +161,11 @@ void ParticleSystem::integrate_PBF(double delta) {
 		// Apply vorticity
 		for (int n : p.neighbors) {
 		    Particle neighbor = particles[n];
-		    V3D vij = neighbor.v_i - p.v_i;
-            p.vorticity_W += vij.cross(gradient_of_spiky(p.x_i - neighbor.x_i, false));
+		    V3D v_ij = neighbor.v_i - p.v_i;
+		    p.vorticity_W += v_ij.cross(gradient_of_spiky(p.x_i - neighbor.x_i, false));
 		}
-        p.vorticity_N = .unit();
-		p.v_i += ((p.vorticity_N.cross(p.vorticity_W)) *  VORTICITY_EPSILON);
+        p.vorticity_N = gradient_of_vorticity(p).unit();
+		p.v_i += ((p.vorticity_N.cross(p.vorticity_W)) * VORTICITY_EPSILON);
 
 		// Apply viscosity
 
@@ -213,6 +213,18 @@ V3D ParticleSystem::gradient_of_constraint(Particle p_i, Particle p_k) {
         return -gradient_of_spiky(r, false) / REST_DENSITY;
     }
 }
+
+V3D ParticleSystem::gradient_of_vorticity(Particle p_i) {
+    V3D gradient = V3D();
+    for (int n : p_i.neighbors) {
+        Particle neighbor = particles[n];
+        double w_ij = p_i.vorticity_W.length() - neighbor.vorticity_W.length();
+        double distance = (p_i.x_i - neighbor.x_i).length();
+        gradient += (gradient_of_spiky(p_i.x_i - neighbor.x_i, false) * w_ij) / distance;
+    }
+    return gradient;
+}
+
 
 // Code for drawing the particle system is below here.
 

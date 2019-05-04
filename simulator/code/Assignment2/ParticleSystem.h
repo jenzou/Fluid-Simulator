@@ -46,6 +46,7 @@ public:
     V3D gradient_of_spiky(V3D r, bool wrt_i);
     double density_constraint(Particle p_i);
     V3D gradient_of_constraint(Particle p_i, Particle p_k);
+    V3D gradient_of_vorticity(Particle p_i);
 
         // Functions for display and interactivity
 	void drawParticleSystem();
