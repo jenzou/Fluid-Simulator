@@ -158,17 +158,22 @@ void ParticleSystem::integrate_PBF(double delta) {
 		// TODO: edit this loop to apply vorticity and viscosity.
 		p.v_i = (p.x_star - p.x_i) / delta;
 
-		// Apply vorticity
+		// Calculate vorticity and viscosity terms
+		V3D viscosity = V3D();
 		for (int n : p.neighbors) {
 		    Particle neighbor = particles[n];
 		    V3D v_ij = neighbor.v_i - p.v_i;
+
 		    p.vorticity_W += v_ij.cross(gradient_of_spiky(p.x_i - neighbor.x_i, false));
+		    viscosity += v_ij * poly6((p.x_i - neighbor.x_i).length());
 		}
         p.vorticity_N = gradient_of_vorticity(p).unit();
+
+		// Apply vorticity
 		p.v_i += ((p.vorticity_N.cross(p.vorticity_W)) * VORTICITY_EPSILON);
 
 		// Apply viscosity
-
+        p.v_i += viscosity * VISCOSITY_C;
 
 		p.x_i = p.x_star;
 	}
