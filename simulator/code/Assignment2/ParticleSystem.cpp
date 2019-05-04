@@ -137,7 +137,7 @@ void ParticleSystem::integrate_PBF(double delta) {
             V3D sum = V3D();
             for (int n : p_i.neighbors) {
                 Particle neighbor = particles[n];
-                double density_term = poly6((p_i.x_i - neighbor.x_i).length()) / poly6(TENSILE_DELTA_Q);
+                double density_term = poly6((p_i.x_star - neighbor.x_star).length()) / poly6(TENSILE_DELTA_Q);
                 double s_corr = -TENSILE_K * pow(density_term, TENSILE_N);
                 sum += gradient_of_constraint(p_i, neighbor) * (p_i.lambda_i + neighbor.lambda_i + s_corr);
             }
@@ -175,7 +175,10 @@ void ParticleSystem::integrate_PBF(double delta) {
 }
 
 double ParticleSystem::poly6(double r) {
-    return POLY_6 * pow(pow(KERNEL_H, 2) - pow(r, 2), 3);
+    if (r >= 0 && r <= KERNEL_H) {
+        return POLY_6 * pow(pow(KERNEL_H, 2) - pow(r, 2), 3);
+    }
+    return 0;
 }
 
 V3D ParticleSystem::gradient_of_spiky(V3D r, bool wrt_i) {
@@ -190,10 +193,8 @@ V3D ParticleSystem::gradient_of_spiky(V3D r, bool wrt_i) {
 double ParticleSystem::density_constraint(Particle p_i) {
     for (int n : p_i.neighbors) {
         Particle neighbor = particles[n];
-        double distance = (p_i.x_i - neighbor.x_i).length();
-        if (distance >= 0 && distance <= KERNEL_H) {
-            p_i.density += poly6(distance);
-        }
+        double distance = (p_i.x_star - neighbor.x_star).length();
+        p_i.density += poly6(distance);
     }
     return (p_i.density / REST_DENSITY) - 1;
 }
@@ -204,12 +205,12 @@ V3D ParticleSystem::gradient_of_constraint(Particle p_i, Particle p_k) {
         V3D sum = V3D();
         for (int n : p_i.neighbors) {
             Particle neighbor = particles[n];
-            V3D r = p_i.x_i - neighbor.x_i;
+            V3D r = p_i.x_star - neighbor.x_star;
             sum += gradient_of_spiky(r, true);
         }
         return sum / REST_DENSITY;
     } else {
-        V3D r = p_i.x_i - p_k.x_i;
+        V3D r = p_i.x_star - p_k.x_star;
         return -gradient_of_spiky(r, false) / REST_DENSITY;
     }
 }
