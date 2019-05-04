@@ -132,11 +132,6 @@ void ParticleSystem::integrate_PBF(double delta) {
 		for (int i = 0; i < particles.size(); i++) {
 			// Calculate change in position
 			particles[i].delta_p = getDeltaP(i);
-
-			/*for (CollisionPlane cp_i : planes) {
-				// Collision detection and response
-				particles[i].x_star = cp_i.handleCollision(particles[i]);
-			}*/
 		}
 
 		for (auto &p_i : particles) {
