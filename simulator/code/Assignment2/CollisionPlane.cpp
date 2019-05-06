@@ -1,5 +1,7 @@
 #include "CollisionPlane.h"
 #include "Particle.h"
+#include<iostream>
+using namespace std;
 
 CollisionPlane::CollisionPlane(P3D p, V3D n) {
 	pointOnPlane = p;
@@ -16,7 +18,8 @@ P3D CollisionPlane::handleCollision(Particle point)
 	V3D after = -pointOnPlane + point.x_star;
 	if (before.dot(normal) * after.dot(normal) <= 0) {
 		// Point collides with plane - return projection
-		double dist = after.dot(normal) * 1.05;
+		double dist = after.dot(normal) * 3.0;
+		// cout << dist << '\n';
 		V3D corr = -(normal * dist);
 		return point.x_star + corr;
 	}

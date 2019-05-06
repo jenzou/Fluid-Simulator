@@ -98,7 +98,7 @@ void ParticleSystem::applyForces(double delta) {
 	if (enableGravity) {
 		// Assume all particles have unit mass to simplify calculations.
 		for (auto &p : particles) {
-			p.v_i += ((GRAVITY) * delta);
+			p.v_i += (GRAVITY * delta);
 		}
 	}
 }
@@ -155,7 +155,7 @@ void ParticleSystem::integrate_PBF(double delta) {
 		// Apply vorticity
 		p.vorticity_W = getVorticityW(particle_index);
 		p.vorticity_N = getVorticityN(particle_index);
-		p.vorticity_W = p.vorticity_N.cross(p.vorticity_W) * VORTICITY_EPSILON;
+		p.vorticity_W = (p.vorticity_N.cross(p.vorticity_W)) * VORTICITY_EPSILON;
 
 		// Apply viscosity
 		p.v_i += getXSPH(particle_index);
@@ -175,7 +175,7 @@ double ParticleSystem::getLambda(int i) {
 		grad_sum += grad_c.length2();
 	}
 
-	return c / (grad_sum + CFM_EPSILON);
+	return -c / (grad_sum + CFM_EPSILON);
 }
 
 double ParticleSystem::getC(int i) {
@@ -200,11 +200,11 @@ V3D ParticleSystem::getGradC(int i, int k) {
 	if (i == k) {
 		for (int j : particles[i].neighbors) {
 			V3D j_to_i = particles[i].x_star - particles[j].x_star;
-			grad_c += spiky(j_to_i, KERNEL_H, true);
+			grad_c += spiky(j_to_i, KERNEL_H, false);
 		}
 	} else {
 		V3D k_to_i = particles[i].x_star - particles[k].x_star;
-		grad_c = - spiky(k_to_i, KERNEL_H, false);
+		grad_c = - spiky(k_to_i, KERNEL_H, true);
 	}
 
 	return grad_c / REST_DENSITY;
@@ -216,7 +216,7 @@ V3D ParticleSystem::getDeltaP(int i) {
 	for (int j : particles[i].neighbors) {
 		double coeff = particles[i].lambda_i + particles[j].lambda_i + getCorr(i, j);
 		V3D j_to_i = particles[i].x_star - particles[j].x_star;
-		V3D term = spiky(j_to_i, KERNEL_H, true);
+		V3D term = spiky(j_to_i, KERNEL_H, false);
 
 		delta_p += term * coeff;
 	}
@@ -252,7 +252,7 @@ V3D ParticleSystem::spiky(V3D r, double h, bool wrt_first) {
 
 	double coeff = -45 / PI / pow(h, 6);
 	double term = pow(h - r.length(), 2);
-	V3D dir = wrt_first ? r.unit() : - r.unit();
+	V3D dir = wrt_first ? r.unit() : -r.unit();
 
 	return dir * (coeff * term);
 }
@@ -262,7 +262,7 @@ V3D ParticleSystem::getVorticityW(int i) {
 	for (int j : particles[i].neighbors) {
 		V3D rel_vel = particles[j].v_i - particles[i].v_i;
 
-		V3D j_to_i = particles[i].x_i - particles[j].x_i;
+		V3D j_to_i = particles[i].x_star - particles[j].x_star;
 		V3D smoothing = spiky(j_to_i, KERNEL_H, false);
 
 		vorticity += rel_vel.cross(smoothing);
@@ -279,10 +279,10 @@ V3D ParticleSystem::getGradW(int i) {
 	V3D grad_w = V3D();
 	for (int j : particles[i].neighbors) {
 		double diff_w = particles[j].vorticity_W.length() - particles[i].vorticity_W.length();
-		V3D j_to_i = particles[i].x_i - particles[j].x_i;
+		V3D j_to_i = particles[i].x_star - particles[j].x_star;
 		double diff_p = j_to_i.length();
 
-		grad_w += (spiky(j_to_i, KERNEL_H, false) * diff_w / diff_p);
+		grad_w += spiky(j_to_i, KERNEL_H, false) * (diff_w / diff_p);
 	}
 
 	return grad_w;
@@ -293,7 +293,7 @@ V3D ParticleSystem::getXSPH(int i) {
 
 	for (int j : particles[i].neighbors) {
 		V3D rel_vel = particles[j].v_i - particles[i].v_i;
-		V3D j_to_i = particles[i].x_i - particles[j].x_i;
+		V3D j_to_i = particles[i].x_star - particles[j].x_star;
 		delta_v += rel_vel * poly6(j_to_i, KERNEL_H);
 	}
 
