@@ -19,7 +19,7 @@ using namespace std;
 GLuint makeBoxDisplayList();
 
 // UPDATING REST_DENSITY IN CONSTANTS.H WAS NOT OVERRIDING THEIR CACHED VALUES. SMH!
-double rd = 10000000; 
+volatile double rd = 30000000; 
 
 ParticleSystem::ParticleSystem(vector<ParticleInit>& initialParticles)
 	: particleMap(KERNEL_H)
