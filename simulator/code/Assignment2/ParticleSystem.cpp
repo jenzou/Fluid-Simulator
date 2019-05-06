@@ -13,7 +13,12 @@
 #include "Constants.h"
 #include <math.h>
 
+#include<iostream>
+using namespace std;
+
 GLuint makeBoxDisplayList();
+
+double rd = 10000000;
 
 ParticleSystem::ParticleSystem(vector<ParticleInit>& initialParticles)
 	: particleMap(KERNEL_H)
@@ -146,16 +151,27 @@ void ParticleSystem::integrate_PBF(double delta) {
 			}
 		}
 	}
+	for (int i = 0; i < particles.size(); i++) {
+		particles[i].v_i = (particles[i].x_star - particles[i].x_i) / delta;
+	}
+	for (int i = 0; i < particles.size(); i++) {
+		particles[i].vorticity_W = getVorticityW(i);
+	}
+	for (int i = 0; i < particles.size(); i++) {
+		particles[i].vorticity_N = getVorticityN(i);
+		V3D vorticity_F = (particles[i].vorticity_N.cross(particles[i].vorticity_W)) * VORTICITY_EPSILON;
+		particles[i].v_i += vorticity_F * delta;
+	}
 
 	int particle_index = 0;
 	for (auto &p : particles) {
 		// TODO: edit this loop to apply vorticity and viscosity.
-		p.v_i = (p.x_star - p.x_i) / delta;
+		// p.v_i = (p.x_star - p.x_i) / delta;
 
 		// Apply vorticity
-		p.vorticity_W = getVorticityW(particle_index);
-		p.vorticity_N = getVorticityN(particle_index);
-		p.vorticity_W = (p.vorticity_N.cross(p.vorticity_W)) * VORTICITY_EPSILON;
+		// V3D vorticity_F = (p.vorticity_N.cross(p.vorticity_W)) * VORTICITY_EPSILON;
+		// p.v_i += vorticity_F * delta;
+		//cout << vorticity_F * delta << "   " << GRAVITY * delta << "\n";
 
 		// Apply viscosity
 		p.v_i += getXSPH(particle_index);
@@ -180,8 +196,9 @@ double ParticleSystem::getLambda(int i) {
 
 double ParticleSystem::getC(int i) {
 	particles[i].density = getDensity(i);
+	// cout << particles[i].density << "\n";
 	
-	return (particles[i].density / REST_DENSITY) - 1.0;
+	return (particles[i].density / rd) - 1.0;
 }
 
 double ParticleSystem::getDensity(int i) {
@@ -204,10 +221,10 @@ V3D ParticleSystem::getGradC(int i, int k) {
 		}
 	} else {
 		V3D k_to_i = particles[i].x_star - particles[k].x_star;
-		grad_c = - spiky(k_to_i, KERNEL_H, true);
+		grad_c = -spiky(k_to_i, KERNEL_H, true);
 	}
 
-	return grad_c / REST_DENSITY;
+	return grad_c / rd;
 }
 
 V3D ParticleSystem::getDeltaP(int i) {
@@ -221,7 +238,7 @@ V3D ParticleSystem::getDeltaP(int i) {
 		delta_p += term * coeff;
 	}
 
-	return delta_p / REST_DENSITY;
+	return delta_p / rd;
 }
 
 double ParticleSystem::getCorr(int i, int j) {
@@ -231,7 +248,7 @@ double ParticleSystem::getCorr(int i, int j) {
 	V3D delta_q = V3D(TENSILE_DELTA_Q, 0.0, 0.0);
 	double denom = poly6(delta_q, KERNEL_H);
 
-	return - TENSILE_K * pow(num/denom, TENSILE_N);
+	return -TENSILE_K * pow(num/denom, TENSILE_N);
 }
 
 double ParticleSystem::poly6(V3D r, double h) {
@@ -239,7 +256,7 @@ double ParticleSystem::poly6(V3D r, double h) {
 		return 0.0;
 	}
 
-	double coeff = 315 / 64 / PI / pow(h, 9);
+	double coeff = 315.0 / 64.0 / PI / pow(h, 9);
 	double term = pow(pow(h, 2) - r.length2(), 3);
 
 	return coeff * term;
@@ -250,7 +267,7 @@ V3D ParticleSystem::spiky(V3D r, double h, bool wrt_first) {
 		return V3D();
 	}
 
-	double coeff = -45 / PI / pow(h, 6);
+	double coeff = -45.0 / PI / pow(h, 6);
 	double term = pow(h - r.length(), 2);
 	V3D dir = wrt_first ? r.unit() : -r.unit();
 
@@ -272,7 +289,8 @@ V3D ParticleSystem::getVorticityW(int i) {
 }
 
 V3D ParticleSystem::getVorticityN(int i) {
-	return getGradW(i).unit();
+	V3D grad_w = getGradW(i);
+	return grad_w / (grad_w.length() + pow(10, -20));
 }
 
 V3D ParticleSystem::getGradW(int i) {
@@ -280,7 +298,7 @@ V3D ParticleSystem::getGradW(int i) {
 	for (int j : particles[i].neighbors) {
 		double diff_w = particles[j].vorticity_W.length() - particles[i].vorticity_W.length();
 		V3D j_to_i = particles[i].x_star - particles[j].x_star;
-		double diff_p = j_to_i.length();
+		double diff_p = j_to_i.length() + pow(10, -20);
 
 		grad_w += spiky(j_to_i, KERNEL_H, false) * (diff_w / diff_p);
 	}
@@ -375,7 +393,7 @@ void ParticleSystem::drawParticleSystem() {
 		glVertexPointer(3, GL_DOUBLE, 0, &(positionArray.front()));
 
 		glColor4d(0.2, 0.2, 0.8, 1);
-		glPointSize(11);
+		glPointSize(13);
 		glDrawElements(GL_POINTS, numParticles, GL_UNSIGNED_INT, &(pointsIndexArray.front()));
 
 		glDisableClientState(GL_VERTEX_ARRAY);
