@@ -2,7 +2,7 @@
 #include "PBFApp.h"
 #include "Constants.h"
 
-MassSpringApp::MassSpringApp() {
+PBFApp::PBFApp() {
 	setWindowTitle("Position-Based Fluid Simulator");
 	TwAddSeparator(mainMenuBar, "sep2", "");
 
@@ -18,14 +18,14 @@ MassSpringApp::MassSpringApp() {
 	pickedParticle = -1;
 }
 
-MassSpringApp::~MassSpringApp(void){
+PBFApp::~PBFApp(void){
 	delete particleSystem;
 }
 
 const double PICK_DISTANCE = 0.1;
 
 //triggered when mouse moves
-bool MassSpringApp::onMouseMoveEvent(double xPos, double yPos) {
+bool PBFApp::onMouseMoveEvent(double xPos, double yPos) {
 	if (pickedParticle > -1) {
 		double modelViewMatrix[16];
 		double projMatrix[16];
@@ -60,7 +60,7 @@ bool MassSpringApp::onMouseMoveEvent(double xPos, double yPos) {
 	return false;
 }
 
-bool MassSpringApp::pickParticle(double screenX, double screenY) {
+bool PBFApp::pickParticle(double screenX, double screenY) {
 	Ray mouseRay = camera->getRayFromScreenCoords(screenX, screenY);
 	int particlePicked = -1;
 	P3D closestPosition;
@@ -85,7 +85,7 @@ bool MassSpringApp::pickParticle(double screenX, double screenY) {
 }
 
 //triggered when mouse buttons are pressed
-bool MassSpringApp::onMouseButtonEvent(int button, int action, int mods, double xPos, double yPos) {
+bool PBFApp::onMouseButtonEvent(int button, int action, int mods, double xPos, double yPos) {
 
 	if (button == 0) {
 		// Left mouse
@@ -107,13 +107,13 @@ bool MassSpringApp::onMouseButtonEvent(int button, int action, int mods, double 
 }
 
 //triggered when using the mouse wheel
-bool MassSpringApp::onMouseWheelScrollEvent(double xOffset, double yOffset) {
+bool PBFApp::onMouseWheelScrollEvent(double xOffset, double yOffset) {
 	if (GLApplication::onMouseWheelScrollEvent(xOffset, yOffset)) return true;
 
 	return false;
 }
 
-bool MassSpringApp::onKeyEvent(int key, int action, int mods) {
+bool PBFApp::onKeyEvent(int key, int action, int mods) {
 	if (GLApplication::onKeyEvent(key, action, mods)) return true;
 
 	if (action == 1) {
@@ -132,14 +132,14 @@ bool MassSpringApp::onKeyEvent(int key, int action, int mods) {
 	return false;
 }
 
-bool MassSpringApp::onCharacterPressedEvent(int key, int mods) {
+bool PBFApp::onCharacterPressedEvent(int key, int mods) {
 	if (GLApplication::onCharacterPressedEvent(key, mods)) return true;
 
 	return false;
 }
 
 
-void MassSpringApp::loadFile(const char* fName) {
+void PBFApp::loadFile(const char* fName) {
 	Logger::consolePrint("Loading file \'%s\'...\n", fName);
 	std::string fileName;
 	fileName.assign(fName);
@@ -147,13 +147,13 @@ void MassSpringApp::loadFile(const char* fName) {
 	std::string fNameExt = fileName.substr(fileName.find_last_of('.') + 1);
 }
 
-void MassSpringApp::saveFile(const char* fName) {
+void PBFApp::saveFile(const char* fName) {
 	Logger::consolePrint("SAVE FILE: Do not know what to do with file \'%s\'\n", fName);
 }
 
 
 // Run the App tasks
-void MassSpringApp::process() {
+void PBFApp::process() {
 	// Take enough steps so that we are always running in (close to) real time
 	int numSteps = (int)((1. / 30.) / DELTA_T);
 	if (numSteps < 1) numSteps = 1;
@@ -166,23 +166,23 @@ void MassSpringApp::process() {
 }
 
 // Draw the App scene - camera transformations, lighting, shadows, reflections, etc apply to everything drawn by this method
-void MassSpringApp::drawScene() {
+void PBFApp::drawScene() {
 	particleSystem->drawParticleSystem();
 }
 
 // This is the wild west of drawing - things that want to ignore depth buffer, camera transformations, etc. Not pretty, quite hacky, but flexible. Individual apps should be careful with implementing this method. It always gets called right at the end of the draw function
-void MassSpringApp::drawAuxiliarySceneInfo() {
+void PBFApp::drawAuxiliarySceneInfo() {
 
 }
 
 // Restart the application.
-void MassSpringApp::restart() {
+void PBFApp::restart() {
 	particleSystem = ParticleSystemLoader::loadFromOBJ("../meshes/bunny300.obj");
 
 	pickedParticle = -1;
 }
 
-bool MassSpringApp::processCommandLine(const std::string& cmdLine) {
+bool PBFApp::processCommandLine(const std::string& cmdLine) {
 
 	istringstream iss(cmdLine);
 

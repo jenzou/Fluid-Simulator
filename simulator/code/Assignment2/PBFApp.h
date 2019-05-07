@@ -8,7 +8,7 @@
 /**
  * Test App
  */
-class MassSpringApp : public GLApplication {
+class PBFApp : public GLApplication {
 private:
 	ParticleSystem *particleSystem;
 	int pickedParticle;
@@ -17,9 +17,9 @@ private:
 public:
 	static double k;
 	// constructor
-	MassSpringApp();
+	PBFApp();
 	// destructor
-	virtual ~MassSpringApp(void);
+	virtual ~PBFApp(void);
 	// Run the App tasks
 	virtual void process();
 	// Draw the App scene - camera transformations, lighting, shadows, reflections, etc apply to everything drawn by this method

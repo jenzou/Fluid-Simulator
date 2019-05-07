@@ -6,7 +6,7 @@
 int main(void){
 
 	GLApplication* theApp;
-	theApp = new MassSpringApp();
+	theApp = new PBFApp();
 
 	theApp->runMainLoop();
 	delete theApp;

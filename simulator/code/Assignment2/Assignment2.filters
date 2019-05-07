@@ -33,7 +33,7 @@
     <ClCompile Include="ParticleSystemLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MassSpringApp.cpp">
+    <ClCompile Include="PBFApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClInclude Include="ParticleSystemLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MassSpringApp.h">
+    <ClInclude Include="PBFApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Constants.h">
