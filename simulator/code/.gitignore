@@ -6,6 +6,5 @@ Release
 *.sdf
 *.opendb
 .vs
-Makefile
 out
 
