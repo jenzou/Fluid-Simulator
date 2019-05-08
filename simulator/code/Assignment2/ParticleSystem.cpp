@@ -13,7 +13,12 @@
 #include "Constants.h"
 #include <math.h>
 
-#include<iostream>
+#include <iostream>
+#include <vector>
+
+#include "KDTree.hpp"
+
+#include <iostream>
 using namespace std;
 
 GLuint makeBoxDisplayList();
@@ -109,6 +114,9 @@ void ParticleSystem::applyForces(double delta) {
 	}
 }
 
+using point_t = std::vector< double >;
+using pointVec = std::vector< point_t >;
+
 // Integrate one time step.
 void ParticleSystem::integrate_PBF(double delta) {
 	applyForces(delta);
@@ -117,7 +125,7 @@ void ParticleSystem::integrate_PBF(double delta) {
 		p.x_star = p.x_i + (p.v_i * delta);
 	}
 
-	// Find neighbors for all particles.
+	/*// Find neighbors for all particles.
 	particleMap.clear();
 	for (int i = 0; i < particles.size(); i++) {
 		particleMap.add(i, particles[i]);
@@ -125,7 +133,23 @@ void ParticleSystem::integrate_PBF(double delta) {
 
 	for (auto &p_i : particles) {
 		particleMap.findNeighbors(p_i, particles);
-	}
+	}*/
+
+    pointVec points;
+    for (int i = 0; i < particles.size(); i++) {
+        point_t point;
+        point.push_back((double) particles[i].x_star[0]);
+        point.push_back((double) particles[i].x_star[1]);
+        point.push_back((double) particles[i].x_star[2]);
+        points.push_back(point);
+    }
+    KDTree tree(points);
+    for (int i = 0; i < points.size(); i++) {
+        particles[i].neighbors.clear();
+        for (size_t neighborIndex : tree.neighborhood_indices(points[i], KERNEL_H)) {
+            particles[i].neighbors.push_back(neighborIndex);
+        }
+    }
 
 	// TODO: implement the solver loop.
 	int iter = 0;
