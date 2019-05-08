@@ -19,7 +19,7 @@ using namespace std;
 GLuint makeBoxDisplayList();
 
 // UPDATING REST_DENSITY IN CONSTANTS.H WAS NOT OVERRIDING THEIR CACHED VALUES. SMH!
-volatile double rd = 30000000; 
+volatile double rd = 9000000.0; 
 
 ParticleSystem::ParticleSystem(vector<ParticleInit>& initialParticles)
 	: particleMap(KERNEL_H)
@@ -393,8 +393,8 @@ void ParticleSystem::drawParticleSystem() {
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(3, GL_DOUBLE, 0, &(positionArray.front()));
 
-		glColor4d(0.2, 0.2, 0.8, 1);
-		glPointSize(13);
+		glColor4d(0.2, 0.2, 0.8, 0.5);
+		glPointSize(20);
 		glDrawElements(GL_POINTS, numParticles, GL_UNSIGNED_INT, &(pointsIndexArray.front()));
 
 		glDisableClientState(GL_VERTEX_ARRAY);
