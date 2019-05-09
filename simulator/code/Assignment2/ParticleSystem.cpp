@@ -24,7 +24,7 @@ using namespace std;
 GLuint makeBoxDisplayList();
 
 // UPDATING REST_DENSITY IN CONSTANTS.H WAS NOT OVERRIDING THEIR CACHED VALUES. SMH!
-volatile double rd = 9000000.0; 
+volatile double rd = 10000000.0; 
 
 ParticleSystem::ParticleSystem(vector<ParticleInit>& initialParticles)
 	: particleMap(KERNEL_H)
@@ -125,7 +125,7 @@ void ParticleSystem::integrate_PBF(double delta) {
 		p.x_star = p.x_i + (p.v_i * delta);
 	}
 
-	/*// Find neighbors for all particles.
+	// Find neighbors for all particles.
 	particleMap.clear();
 	for (int i = 0; i < particles.size(); i++) {
 		particleMap.add(i, particles[i]);
@@ -133,9 +133,9 @@ void ParticleSystem::integrate_PBF(double delta) {
 
 	for (auto &p_i : particles) {
 		particleMap.findNeighbors(p_i, particles);
-	}*/
-
-    pointVec points;
+	}
+	// @JEN PLEASE DO NOT CLEAN THIS UP
+    /*pointVec points;
     for (int i = 0; i < particles.size(); i++) {
         point_t point;
         point.push_back((double) particles[i].x_star[0]);
@@ -149,7 +149,7 @@ void ParticleSystem::integrate_PBF(double delta) {
         for (size_t neighborIndex : tree.neighborhood_indices(points[i], KERNEL_H)) {
             particles[i].neighbors.push_back(neighborIndex);
         }
-    }
+    }*/
 
 	// TODO: implement the solver loop.
 	int iter = 0;

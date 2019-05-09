@@ -18,6 +18,8 @@
 #include <limits>
 #include <memory>
 #include <vector>
+#include <iostream>
+#include <random>
 
 #include "KDTree.hpp"
 
@@ -97,8 +99,8 @@ KDNodePtr KDTree::make_tree(const pointIndexArr::iterator &begin,  //
     }
 
     size_t dim = begin->first.size();
-
-    if (length > 1) {
+    // @JEN PLEASE DO NOT CLEAN THIS UP
+    /*if (length > 1) {
         sort_on_idx(begin, end, level);
     }
 
@@ -127,6 +129,46 @@ KDNodePtr KDTree::make_tree(const pointIndexArr::iterator &begin,  //
 
     // KDNode result = KDNode();
     return std::make_shared< KDNode >(*middle, left, right);
+    */
+    size_t k = std::min(length, (size_t) 10);
+    pointIndexArr samples;
+    std::random_device rd; // obtain a random number from hardware
+    std::mt19937 eng(rd()); // seed the generator
+    std::uniform_int_distribution<> distr(0, length-1); // define the range
+    for (int z = 0; z < k; z++) {
+        samples.push_back(*(begin + distr(eng)));
+    }
+    sort_on_idx(samples.begin(), samples.end(), level);
+
+    auto median = samples.at(k/2).first.at(level);
+    
+    pointIndexArr smaller, bigger;
+    for (auto curr = begin; curr != end; curr++) {
+        if (curr->second == samples.at(k/2).second) {
+            continue;
+        }
+        if (curr->first.at(level) <= median) {
+            smaller.push_back(*curr);
+        } else {
+            bigger.push_back(*curr);
+        }
+    }
+
+    KDNodePtr left;
+    if (smaller.size() > 0 && dim > 0) {
+        left = make_tree(smaller.begin(), smaller.end(), smaller.size(), (level + 1) % dim);
+    } else {
+        left = leaf;
+    }
+
+    KDNodePtr right;
+    if (bigger.size() > 0 && dim > 0) {
+        right = make_tree(bigger.begin(), bigger.end(), bigger.size(), (level + 1) % dim);
+    } else {
+        right = leaf;
+    }
+
+    return std::make_shared< KDNode >(samples.at(k/2), left, right);
 }
 
 KDTree::KDTree(pointVec point_array) {
