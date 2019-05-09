@@ -130,7 +130,7 @@ KDNodePtr KDTree::make_tree(const pointIndexArr::iterator &begin,  //
     // KDNode result = KDNode();
     return std::make_shared< KDNode >(*middle, left, right);
     */
-    size_t k = std::min(length, (size_t) 10);
+    size_t k = std::min(length, (size_t) 100);
     pointIndexArr samples;
     std::random_device rd; // obtain a random number from hardware
     std::mt19937 eng(rd()); // seed the generator
