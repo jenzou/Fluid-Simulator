@@ -22,7 +22,7 @@ using namespace std;
 GLuint makeBoxDisplayList();
 
 // UPDATING REST_DENSITY IN CONSTANTS.H WAS NOT OVERRIDING THEIR CACHED VALUES. SMH!
-volatile double rd = 10000000.0; 
+volatile double rd = 9000000.0; 
 
 ParticleSystem::ParticleSystem(vector<ParticleInit>& initialParticles)
 	: particleMap(KERNEL_H)
@@ -45,19 +45,21 @@ ParticleSystem::ParticleSystem(vector<ParticleInit>& initialParticles)
 	}
 
 	// Create floor and walls
-	CollisionPlane floor(P3D(0, 0, 0), V3D(0, 1, 0));
+	CollisionPlane floor1(P3D(-1, 0, 0), V3D(-0.2, 1, 0));
+	//CollisionPlane floor2(P3D(1, 0, 0), V3D(-0.2, 1, 0));
 	CollisionPlane left_wall(P3D(-1, 0, 0), V3D(1, 0, 0));
-	CollisionPlane right_wall(P3D(1, 0, 0), V3D(-1, 0, 0));
+	CollisionPlane right_wall(P3D(4, 0, 0), V3D(-1, 0, 0));
 	CollisionPlane front_wall(P3D(0, 0, -1), V3D(0, 0, 1));
 	CollisionPlane back_wall(P3D(0, 0, 1), V3D(0, 0, -1));
 	CollisionPlane ceiling(P3D(0, 2, 0), V3D(0, -1, 0));
 
-	planes.push_back(floor);
-	planes.push_back(left_wall);
+	planes.push_back(floor1);
+	//planes.push_back(floor2);
 	planes.push_back(right_wall);
 	planes.push_back(front_wall);
 	planes.push_back(back_wall);
 	planes.push_back(ceiling);
+	planes.push_back(left_wall);
 
 	// Arrays to be passed to OpenGL
 	positionArray = vector<double>(numParticles * 3);
@@ -115,8 +117,18 @@ void ParticleSystem::applyForces(double delta) {
 using point_t = std::vector< double >;
 using pointVec = std::vector< point_t >;
 
+double wave = 0.05;
+double wallx = -1.0;
 // Integrate one time step.
 void ParticleSystem::integrate_PBF(double delta) {
+	// Move left wall
+	planes.pop_back();
+	if (wallx > 0.0 || wallx < -1.5) {
+		wave *= -1;
+	}
+	wallx += wave;
+	planes.push_back(CollisionPlane(P3D(wallx, 0, 0), V3D(1, 0, 0)));
+
 	applyForces(delta);
 	// Predict positions for this timestep.
 	for (auto &p : particles) {
@@ -350,7 +362,7 @@ GLuint makeBoxDisplayList() {
 	glNewList(index, GL_COMPILE);
 	glLineWidth(3);
 	glColor3d(0, 0, 0);
-	glBegin(GL_LINES);
+	glBegin(GL_LINES);/*
 	glVertex3d(-1, 0, -1);
 	glVertex3d(-1, 0, 1);
 
@@ -385,7 +397,7 @@ GLuint makeBoxDisplayList() {
 	glVertex3d(1, 2, -1);
 
 	glVertex3d(1, 2, -1);
-	glVertex3d(-1, 2, -1);
+	glVertex3d(-1, 2, -1);*/
 	glEnd();
 
 	glEndList();

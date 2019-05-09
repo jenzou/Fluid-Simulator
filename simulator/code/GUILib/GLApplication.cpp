@@ -252,7 +252,7 @@ void GLApplication::runMainLoop() {
 		if (saveScreenshots) {
 			static int screenShotNumber = 0;
 			char fName[100];
-			sprintf(fName, "..\\screenShots\\ss%05d.bmp", screenShotNumber);
+			sprintf(fName, "../screenShots/ss%05d.bmp", screenShotNumber);
 			screenShotNumber++;
 			int viewportSettings[4];//x, y, w, h
 			glGetIntegerv(GL_VIEWPORT, viewportSettings);
