@@ -12,6 +12,10 @@
 #include "GLTexture.h"
 #include "GLShaderMaterial.h"
 
+#include <iostream>
+using namespace std;
+
+
 GLApplication* glAppInstance = NULL;
 
 GLApplication::GLApplication(int x, int y, int w, int h){
@@ -224,12 +228,16 @@ GLApplication::~GLApplication(void){
 
 void GLApplication::runMainLoop() {
 	// Main loop (repeated while window is not closed and [ESC] is not pressed)
+	int z = 0;
 	while (!glfwWindowShouldClose(glfwWindow)){
 		double timeSpentProcessing = 0;
 		fpsTimer.restart();
 		if (appIsRunning)
 			process();
 		timeSpentProcessing = fpsTimer.timeEllapsed();
+		if (timeSpentProcessing * 100 > 10 && z++ % 10 == 0) {
+			Logger::consolePrint("Last frame: %f process time", timeSpentProcessing * 100);
+		}
 
 		draw();
 

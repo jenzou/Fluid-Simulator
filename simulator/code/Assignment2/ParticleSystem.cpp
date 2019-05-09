@@ -12,8 +12,6 @@
 #include "Utils/Logger.h"
 #include "Constants.h"
 #include <math.h>
-
-#include <iostream>
 #include <vector>
 
 #include "KDTree.hpp"
@@ -126,16 +124,16 @@ void ParticleSystem::integrate_PBF(double delta) {
 	}
 
 	// Find neighbors for all particles.
-	particleMap.clear();
+	/*particleMap.clear();
 	for (int i = 0; i < particles.size(); i++) {
 		particleMap.add(i, particles[i]);
 	}
 
 	for (auto &p_i : particles) {
 		particleMap.findNeighbors(p_i, particles);
-	}
+	}*/
 	// @JEN PLEASE DO NOT CLEAN THIS UP
-    /*pointVec points;
+    pointVec points;
     for (int i = 0; i < particles.size(); i++) {
         point_t point;
         point.push_back((double) particles[i].x_star[0]);
@@ -149,7 +147,7 @@ void ParticleSystem::integrate_PBF(double delta) {
         for (size_t neighborIndex : tree.neighborhood_indices(points[i], KERNEL_H)) {
             particles[i].neighbors.push_back(neighborIndex);
         }
-    }*/
+    }
 
 	// TODO: implement the solver loop.
 	int iter = 0;
