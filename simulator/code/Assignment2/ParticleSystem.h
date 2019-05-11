@@ -6,6 +6,7 @@
 #include "CollisionPlane.h"
 #include "Particle.h"
 #include "SpatialMap.h"
+#include "CollisionSphere.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ private:
 	vector<Particle> particles;
 	vector<CollisionPlane> planes;
 	SpatialMap particleMap;
+    CollisionSphere sphere = CollisionSphere(P3D(0, .5, 0), 0.5);
 
 	// Vectors to pass to OpenGL for drawing.
 	// Each time step, the relevant data are copied into these lists.
@@ -32,6 +34,8 @@ private:
 	int count;
 	
 	unsigned int boxList;
+
+	void moveWall();
 
 	double getLambda(int i);
 	double getC(int i);
@@ -65,4 +69,7 @@ public:
 	// Whether or not we should draw springs and particles as lines and dots respectively.
 	static bool drawParticles;
 	static bool enableGravity;
+
+	// Whether or not we should collide with and draw sphere
+	static bool addSphere;
 };

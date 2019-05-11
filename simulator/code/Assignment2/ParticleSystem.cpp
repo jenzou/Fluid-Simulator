@@ -45,15 +45,17 @@ ParticleSystem::ParticleSystem(vector<ParticleInit>& initialParticles)
 	}
 
 	// Create floor and walls
-	CollisionPlane floor1(P3D(-1, 0, 0), V3D(-0.2, 1, 0));
-	//CollisionPlane floor2(P3D(1, 0, 0), V3D(-0.2, 1, 0));
+	CollisionPlane floor(P3D(0, -1, 0), V3D(0, 1, 0));
+	//CollisionPlane floor3(P3D(-1, 0, 0), V3D(0.4, 1, 0));
+	//CollisionPlane floor2(P3D(1, 0, 0), V3D(-0.3, 1, 0));
 	CollisionPlane left_wall(P3D(-1, 0, 0), V3D(1, 0, 0));
-	CollisionPlane right_wall(P3D(4, 0, 0), V3D(-1, 0, 0));
+	CollisionPlane right_wall(P3D(1, 0, 0), V3D(-1, 0, 0));
 	CollisionPlane front_wall(P3D(0, 0, -1), V3D(0, 0, 1));
 	CollisionPlane back_wall(P3D(0, 0, 1), V3D(0, 0, -1));
 	CollisionPlane ceiling(P3D(0, 2, 0), V3D(0, -1, 0));
 
-	planes.push_back(floor1);
+	planes.push_back(floor);
+	//planes.push_back(floor3);
 	//planes.push_back(floor2);
 	planes.push_back(right_wall);
 	planes.push_back(front_wall);
@@ -80,6 +82,7 @@ ParticleSystem::~ParticleSystem() {
 
 bool ParticleSystem::drawParticles = true;
 bool ParticleSystem::enableGravity = true;
+bool ParticleSystem::addSphere = true;
 
 P3D ParticleSystem::getPositionOf(int i) {
 	return particles[i].x_i;
@@ -117,17 +120,9 @@ void ParticleSystem::applyForces(double delta) {
 using point_t = std::vector< double >;
 using pointVec = std::vector< point_t >;
 
-double wave = 0.05;
-double wallx = -1.0;
 // Integrate one time step.
 void ParticleSystem::integrate_PBF(double delta) {
-	// Move left wall
-	planes.pop_back();
-	if (wallx > 0.0 || wallx < -1.5) {
-		wave *= -1;
-	}
-	wallx += wave;
-	planes.push_back(CollisionPlane(P3D(wallx, 0, 0), V3D(1, 0, 0)));
+    //moveWall();
 
 	applyForces(delta);
 	// Predict positions for this timestep.
@@ -136,16 +131,16 @@ void ParticleSystem::integrate_PBF(double delta) {
 	}
 
 	// Find neighbors for all particles.
-	/*particleMap.clear();
+	particleMap.clear();
 	for (int i = 0; i < particles.size(); i++) {
 		particleMap.add(i, particles[i]);
 	}
 
 	for (auto &p_i : particles) {
 		particleMap.findNeighbors(p_i, particles);
-	}*/
-	// @JEN PLEASE DO NOT CLEAN THIS UP
-    pointVec points;
+	}
+
+    /*pointVec points;
     for (int i = 0; i < particles.size(); i++) {
         point_t point;
         point.push_back((double) particles[i].x_star[0]);
@@ -159,7 +154,7 @@ void ParticleSystem::integrate_PBF(double delta) {
         for (size_t neighborIndex : tree.neighborhood_indices(points[i], KERNEL_H)) {
             particles[i].neighbors.push_back(neighborIndex);
         }
-    }
+    }*/
 
 	// TODO: implement the solver loop.
 	int iter = 0;
@@ -184,6 +179,10 @@ void ParticleSystem::integrate_PBF(double delta) {
 				// Collision detection and response
 				particles[i].x_star = cp_i.handleCollision(particles[i]);
 			}
+
+            if (addSphere) {
+                particles[i].x_star = sphere.handleCollision(particles[i]);
+            }
 		}
 	}
 	for (int i = 0; i < particles.size(); i++) {
@@ -215,6 +214,22 @@ void ParticleSystem::integrate_PBF(double delta) {
 
 		particle_index++;
 	}
+}
+
+void ParticleSystem::moveWall() {
+    double wave = 0.05;
+    double wallx = -1.0;
+    int delay = 0;
+
+    // Move left wall
+    if (delay++ > 100) {
+        planes.pop_back();
+        if (wallx > 0.0 || wallx < -1.5) {
+            wave *= -1;
+        }
+        wallx += wave;
+        planes.push_back(CollisionPlane(P3D(wallx, 0, 0), V3D(1, 0, 0)));
+    }
 }
 
 double ParticleSystem::getLambda(int i) {
@@ -362,8 +377,8 @@ GLuint makeBoxDisplayList() {
 	glNewList(index, GL_COMPILE);
 	glLineWidth(3);
 	glColor3d(0, 0, 0);
-	glBegin(GL_LINES);/*
-	glVertex3d(-1, 0, -1);
+	glBegin(GL_LINES);
+	/*glVertex3d(1, 0, -1);
 	glVertex3d(-1, 0, 1);
 
 	glVertex3d(-1, 0, 1);
@@ -434,4 +449,18 @@ void ParticleSystem::drawParticleSystem() {
 		glDisableClientState(GL_VERTEX_ARRAY);
 	}
 
+	if (addSphere) {
+        // Draw sphere as large blue dot
+        vector<double> positionArray2 = vector<double>{sphere.origin[0], sphere.origin[1]+.25, sphere.origin[2]};
+        vector<double> pointsArray2 = vector<double>{0};
+
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glVertexPointer(3, GL_DOUBLE, 0, &(positionArray2.front()));
+
+        glColor4d(0.2, 0.2, 0.8, 1);
+        glPointSize(185);
+        glDrawElements(GL_POINTS, 1, GL_UNSIGNED_INT, &(pointsArray2.front()));
+
+        glDisableClientState(GL_VERTEX_ARRAY);
+	}
 }

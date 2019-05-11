@@ -40,6 +40,7 @@ ParticleSystem* ParticleSystemLoader::loadFromOBJ(string filename) {
 	unordered_set<pair<int, int>, pair_hash> edges;
 
 	// First obtain vertices; these will become particles
+	/*
 	for (int i = 0; i < mesh->vertexCount; i++) {
 		int base = 3 * i;
 		ParticleInit p;
@@ -47,9 +48,30 @@ ParticleSystem* ParticleSystemLoader::loadFromOBJ(string filename) {
 		p.velocity = V3D(0, 0, 0);
 		p.mass = 1;
 		ps.push_back(p);
+	}*/
+	
+	for (double i = -1.0; i < 1.0; i += 0.15) {
+		for (double j = -1.0; j < 1.0; j += 0.15) {
+			ParticleInit p;
+			p.position = P3D(i, 1.8, j);
+			p.velocity = V3D();
+			p.mass = 1;
+			ps.push_back(p);
+		}
 	}
-
+	/*
 	// Logger::consolePrint("%d edges", edges.size());
+	for (double i = -1.0; i < 0; i += 0.15) {
+		for (double j = 0.0; j < 1.0; j += 0.15) {
+			for (double k = -1.0; k < 1.0; k += 0.15) {
+				ParticleInit p;
+				p.position = P3D(i, j, k);
+				p.velocity = V3D();
+				p.mass = 1;
+				ps.push_back(p);
+			}
+		}
+	}*/
 
 	ParticleSystem* system = new ParticleSystem(ps);
 	return system;

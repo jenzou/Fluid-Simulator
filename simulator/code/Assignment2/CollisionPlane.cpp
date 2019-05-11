@@ -18,14 +18,14 @@ P3D CollisionPlane::handleCollision(Particle point)
 	V3D after = -pointOnPlane + point.x_star;
 	if (before.dot(normal) * after.dot(normal) <= 0) {
 		// Point collides with plane - return projection
-		double dist = after.dot(normal) * 1.5;
+		double dist = after.dot(normal) - 0.005;
 		// cout << dist << '\n';
 		V3D corr = -(normal * dist);
 		return point.x_star + corr;
 	}
 	else if (before.dot(normal) <= 0 || after.dot(normal) <= 0) {
 		// Point collides with plane - return projection
-		double dist = after.dot(normal) * 1.1;
+		double dist = after.dot(normal) - 0.005;
 		// cout << dist << '\n';
 		V3D corr = -(normal * dist);
 		return point.x_star + corr;
