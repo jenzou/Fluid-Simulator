@@ -70,13 +70,10 @@ out/OptimizationLib/ObjectiveFunction.o: OptimizationLib/ObjectiveFunction.cpp
 out/OptimizationLib/SoftUnilateralConstraint.o: OptimizationLib/SoftUnilateralConstraint.cpp
 	$(CC) $(CC_FLAGS) -c -o out/OptimizationLib/SoftUnilateralConstraint.o OptimizationLib/SoftUnilateralConstraint.cpp
 
-GUILIB = out/GUILib/FreeType.o out/GUILib/GLApplication.o out/GUILib/GLCamera.o out/GUILib/GLConsole.o out/GUILib/GLContentManager.o out/GUILib/GLMesh.o out/GUILib/GLShader.o out/GUILib/GLShaderMaterial.o out/GUILib/GLTexture.o out/GUILib/GLTrackingCamera.o out/GUILib/GLUtils.o out/GUILib/GLWindow.o out/GUILib/GLWindow2D.o out/GUILib/GLWindow3D.o out/GUILib/GLWindowContainer.o out/GUILib/GlobalMouseState.o out/GUILib/InteractiveWidget.o out/GUILib/OBJReader.o out/GUILib/RotateWidget.o out/GUILib/RotateWidgetV1.o out/GUILib/RotateWidgetV2.o out/GUILib/TransformWidget.o out/GUILib/TranslateWidget.o
+GUILIB = out/GUILib/FreeType.o out/GUILib/GLCamera.o out/GUILib/GLConsole.o out/GUILib/GLContentManager.o out/GUILib/GLMesh.o out/GUILib/GLShader.o out/GUILib/GLShaderMaterial.o out/GUILib/GLTexture.o out/GUILib/GLTrackingCamera.o out/GUILib/GLUtils.o out/GUILib/GLWindow.o out/GUILib/GLWindow2D.o out/GUILib/GLWindow3D.o out/GUILib/GLWindowContainer.o out/GUILib/GlobalMouseState.o out/GUILib/InteractiveWidget.o out/GUILib/OBJReader.o out/GUILib/RotateWidget.o out/GUILib/RotateWidgetV1.o out/GUILib/RotateWidgetV2.o out/GUILib/TransformWidget.o out/GUILib/TranslateWidget.o out/GUILib/GLApplication.o
 
 out/GUILib/FreeType.o: GUILib/FreeType.cpp
 	$(CC) $(CC_FLAGS) -c -o out/GUILib/FreeType.o GUILib/FreeType.cpp
-
-out/GUILib/GLApplication.o: GUILib/GLApplication.cpp
-	$(CC) $(CC_FLAGS) -c -o out/GUILib/GLApplication.o GUILib/GLApplication.cpp
 
 out/GUILib/GLCamera.o: GUILib/GLCamera.cpp
 	$(CC) $(CC_FLAGS) -c -o out/GUILib/GLCamera.o GUILib/GLCamera.cpp
@@ -141,10 +138,25 @@ out/GUILib/TransformWidget.o: GUILib/TransformWidget.cpp
 out/GUILib/TranslateWidget.o: GUILib/TranslateWidget.cpp
 	$(CC) $(CC_FLAGS) -c -o out/GUILib/TranslateWidget.o GUILib/TranslateWidget.cpp
 
-ASSIGNMENT2 = out/Assignment2/CollisionPlane.o out/Assignment2/PBFApp.o out/Assignment2/ParticleSystem.o out/Assignment2/ParticleSystemLoader.o out/Assignment2/SpatialMap.o out/Assignment2/KDTree.o out/Assignment2/main.o
+out/GUILib/GLApplication.o: GUILib/GLApplication.cpp
+	$(CC) $(CC_FLAGS) -c -o out/GUILib/GLApplication.o GUILib/GLApplication.cpp
+
+ASSIGNMENT2 = out/Assignment2/SpatialMap.o out/Assignment2/CollisionCube.o out/Assignment2/CollisionPlane.o out/Assignment2/CollisionSphere.o out/Assignment2/KDTree.o out/Assignment2/PBFApp.o out/Assignment2/ParticleSystem.o out/Assignment2/ParticleSystemLoader.o out/Assignment2/main.o
+
+out/Assignment2/SpatialMap.o: Assignment2/SpatialMap.cpp
+	$(CC) $(CC_FLAGS) -c -o out/Assignment2/SpatialMap.o Assignment2/SpatialMap.cpp
+
+out/Assignment2/CollisionCube.o: Assignment2/CollisionCube.cpp
+	$(CC) $(CC_FLAGS) -c -o out/Assignment2/CollisionCube.o Assignment2/CollisionCube.cpp
 
 out/Assignment2/CollisionPlane.o: Assignment2/CollisionPlane.cpp
 	$(CC) $(CC_FLAGS) -c -o out/Assignment2/CollisionPlane.o Assignment2/CollisionPlane.cpp
+
+out/Assignment2/CollisionSphere.o: Assignment2/CollisionSphere.cpp
+	$(CC) $(CC_FLAGS) -c -o out/Assignment2/CollisionSphere.o Assignment2/CollisionSphere.cpp
+
+out/Assignment2/KDTree.o: Assignment2/KDTree.cpp
+	$(CC) $(CC_FLAGS) -c -o out/Assignment2/KDTree.o Assignment2/KDTree.cpp
 
 out/Assignment2/PBFApp.o: Assignment2/PBFApp.cpp
 	$(CC) $(CC_FLAGS) -c -o out/Assignment2/PBFApp.o Assignment2/PBFApp.cpp
@@ -154,12 +166,6 @@ out/Assignment2/ParticleSystem.o: Assignment2/ParticleSystem.cpp
 
 out/Assignment2/ParticleSystemLoader.o: Assignment2/ParticleSystemLoader.cpp
 	$(CC) $(CC_FLAGS) -c -o out/Assignment2/ParticleSystemLoader.o Assignment2/ParticleSystemLoader.cpp
-
-out/Assignment2/SpatialMap.o: Assignment2/SpatialMap.cpp
-	$(CC) $(CC_FLAGS) -c -o out/Assignment2/SpatialMap.o Assignment2/SpatialMap.cpp
-
-out/Assignment2/KDTree.o: Assignment2/KDTree.cpp
-	$(CC) $(CC_FLAGS) -c -o out/Assignment2/KDTree.o Assignment2/KDTree.cpp
 
 out/Assignment2/main.o: Assignment2/main.cpp
 	$(CC) $(CC_FLAGS) -c -o out/Assignment2/main.o Assignment2/main.cpp
@@ -185,7 +191,7 @@ Assignment2_dir:
 directories:  Utils_dir MathLib_dir OptimizationLib_dir GUILib_dir Assignment2_dir
 
 cs467: directories $(OBJS)
-	$(LD) $(LD_FLAGS) $(OBJS) -L../libs -lglut -L../libs -lGLEW -L../libs -lglfw3 -lGLU -lGL -lX11 -ldl -lXi -lXrandr -lXxf86vm -lXinerama -lXcursor -lrt -lm -pthread -lfreetype -L/home/cc/cs184/sp19/class/cs184-aci/AntTweakBar/lib -lAntTweakBar -o out/cs467
+	$(LD) $(LD_FLAGS) $(OBJS) -lglut -lGLEW -L../libs -lglfw3 -lGLU -lGL -lX11 -ldl -lXi -lXrandr -lXxf86vm -lXinerama -lXcursor -lrt -lm -pthread -Wl,-rpath=../libs -lfreetype -lAntTweakBar -o out/cs467
 
 clean:
 	rm -r out/*
