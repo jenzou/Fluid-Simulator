@@ -1,0 +1,44 @@
+Determining if files usbhid.h exist failed with the following output:
+Change Dir: /home/cc/cs184/sp19/class/cs184-aci/freeglut-3.0.0/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_f0a61/fast"
+/usr/bin/make -f CMakeFiles/cmTC_f0a61.dir/build.make CMakeFiles/cmTC_f0a61.dir/build
+make[1]: Entering directory '/home/cc/cs184/sp19/class/cs184-aci/freeglut-3.0.0/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_f0a61.dir/CheckIncludeFiles.c.o
+/usr/bin/cc    -Wall -pedantic    -o CMakeFiles/cmTC_f0a61.dir/CheckIncludeFiles.c.o   -c /home/cc/cs184/sp19/class/cs184-aci/freeglut-3.0.0/CMakeFiles/CMakeTmp/CheckIncludeFiles.c
+/home/cc/cs184/sp19/class/cs184-aci/freeglut-3.0.0/CMakeFiles/CMakeTmp/CheckIncludeFiles.c:2:20: fatal error: usbhid.h: No such file or directory
+compilation terminated.
+CMakeFiles/cmTC_f0a61.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_f0a61.dir/CheckIncludeFiles.c.o' failed
+make[1]: *** [CMakeFiles/cmTC_f0a61.dir/CheckIncludeFiles.c.o] Error 1
+make[1]: Leaving directory '/home/cc/cs184/sp19/class/cs184-aci/freeglut-3.0.0/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_f0a61/fast' failed
+make: *** [cmTC_f0a61/fast] Error 2
+
+Source:
+/* */
+#include <usbhid.h>
+
+
+int main(void){return 0;}
+
+Determining if the function XParseGeometry exists failed with the following output:
+Change Dir: /home/cc/cs184/sp19/class/cs184-aci/freeglut-3.0.0/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_6540e/fast"
+/usr/bin/make -f CMakeFiles/cmTC_6540e.dir/build.make CMakeFiles/cmTC_6540e.dir/build
+make[1]: Entering directory '/home/cc/cs184/sp19/class/cs184-aci/freeglut-3.0.0/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6540e.dir/CheckFunctionExists.c.o
+/usr/bin/cc    -Wall -pedantic -DCHECK_FUNCTION_EXISTS=XParseGeometry   -o CMakeFiles/cmTC_6540e.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.5/Modules/CheckFunctionExists.c
+Linking C executable cmTC_6540e
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6540e.dir/link.txt --verbose=1
+/usr/bin/cc   -Wall -pedantic -DCHECK_FUNCTION_EXISTS=XParseGeometry    CMakeFiles/cmTC_6540e.dir/CheckFunctionExists.c.o  -o cmTC_6540e -rdynamic -lm 
+CMakeFiles/cmTC_6540e.dir/CheckFunctionExists.c.o: In function `main':
+CheckFunctionExists.c:(.text+0x15): undefined reference to `XParseGeometry'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_6540e.dir/build.make:97: recipe for target 'cmTC_6540e' failed
+make[1]: *** [cmTC_6540e] Error 1
+make[1]: Leaving directory '/home/cc/cs184/sp19/class/cs184-aci/freeglut-3.0.0/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_6540e/fast' failed
+make: *** [cmTC_6540e/fast] Error 2
+
+
